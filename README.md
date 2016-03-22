@@ -8,6 +8,8 @@ An Electron-based GUI for CadQuery.
 Make sure you have npm installed.
 
 ```
+git clone https://github.com/jmwright/cadquery-gui.git
+cd cadquery-gui/
 npm install
 npm start
 ```
