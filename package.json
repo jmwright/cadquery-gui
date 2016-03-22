@@ -3,6 +3,11 @@
   "version" : "0.1.0",
   "description": "A GUI for the CadQuery library.",
   "license": "Apache-2.0",
+  "author": {
+    "name": "Jeremy Wright",
+    "email": "wrightjmf@hotmail.com",
+    "url": "https://github.com/jmwright"
+  },
   "repository": {
         "type" : "git",
         "url" : "https://github.com/jmwright/cadquery-gui.git"
