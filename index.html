@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/cadquery.css">
+    <title>CadQuery GUI</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <style type="text/css" media="screen">
+        #editor {
+            height: 300px;
+            position: relative;
+            top: 0px;
+            left: 0px;
+        }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#" style="padding:0px;"><img src="assets/images/cqlogo.png" style="height:100%"/></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-file"></span> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#"><span class="glyphicon glyphicon-plus"> New</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-open"> Open</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-save"> Save</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-import"> Import</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-export"> Export</span></a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#"><span class="glyphicon glyphicon-upload"> Upload</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-upload"> Download</span></a></li>
+              </ul>
+            </li>
+            <li><a href="#"><span class="glyphicon glyphicon-play"></span></a></li>
+            <li><a href="#">F</a></li>
+            <li><a href="#">R</a></li>
+            <li><a href="#">L</a></li>
+            <li><a href="#">T</a></li>
+            <li><a href="#">B</a></li>
+            <li><a href="#">I</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-console"></span></a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Execution</a></li>
+                <li><a href="#">Editor</a></li>
+                <li><a href="#">3D Environment</a></li>
+                <li><a href="#">About</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Sign In</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <script type="text/javascript" src="assets/js/three.min.js"></script>
+    <script type="text/javascript" src="assets/js/Detector.js"></script>
+    <script type="text/javascript" src="assets/js/CanvasRenderer.js"></script>
+    <script type="text/javascript" src="assets/js/Projector.js"></script>
+    <script type="text/javascript" src="assets/js/OrbitControls.js"></script>
+    <script type="text/javascript" src="assets/js/jquery-2.2.2.min.js"></script>
+    <script>window.jQuery = window.$ = typeof module === 'object' ? module.exports : jQuery</script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/OBJLoader.js"></script>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div id="WebGLCanvas">
+                        <script type="text/javascript" src="lib/viewer.js"></script>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="editor">
+                        function foo(items) {
+                            var x = "All this is syntax highlighted";
+                            return x;
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.getSession().setMode("ace/mode/python");
+    </script>
+</body>
+</html>
