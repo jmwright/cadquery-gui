@@ -6,3 +6,18 @@ body {
     background-color: black;
     font-size: 20px;
 }
+
+#editor {
+    position:absolute;
+    top:55px;
+    left:0px;
+    z-index:1;
+    width:33%;
+    height:50%;
+}
+
+#WebGLCanvas {
+    position:absolute;
+    top:55px;
+    left:0px;
+}

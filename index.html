@@ -6,14 +6,6 @@
     <link rel="stylesheet" href="assets/css/cadquery.css">
     <title>CadQuery GUI</title>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-    <style type="text/css" media="screen">
-        #editor {
-            height: 300px;
-            position: relative;
-            top: 0px;
-            left: 0px;
-        }
-    </style>
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -33,7 +25,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-file"></span> <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  data-toggle="tooltip" title="File Menu"><span class="glyphicon glyphicon-file"></span> <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#"><span class="glyphicon glyphicon-plus"> New</span></a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-open"> Open</span></a></li>
@@ -45,13 +37,13 @@
                 <li><a href="#"><span class="glyphicon glyphicon-upload"> Download</span></a></li>
               </ul>
             </li>
-            <li><a href="#"><span class="glyphicon glyphicon-play"></span></a></li>
-            <li><a href="#">F</a></li>
-            <li><a href="#">R</a></li>
-            <li><a href="#">L</a></li>
-            <li><a href="#">T</a></li>
-            <li><a href="#">B</a></li>
-            <li><a href="#">I</a></li>
+            <li><a id="run-button" href="#" data-toggle="tooltip" title="Run Script"><span class="glyphicon glyphicon-play"></span></a></li>
+            <li><a href="#" data-toggle="tooltip" title="Front View">F</a></li>
+            <li><a href="#" data-toggle="tooltip" title="Right Side View">R</a></li>
+            <li><a href="#" data-toggle="tooltip" title="Left Side View">L</a></li>
+            <li><a href="#" data-toggle="tooltip" title="Top View">T</a></li>
+            <li><a href="#" data-toggle="tooltip" title="Bottom View">B</a></li>
+            <li><a href="#" data-toggle="tooltip" title="Isometric View">I</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-console"></span></a></li>
@@ -80,24 +72,26 @@
     <script>window.jQuery = window.$ = typeof module === 'object' ? module.exports : jQuery</script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/js/OBJLoader.js"></script>
+    <script type="text/javascript" src="assets/js/cadquery.js"></script>
 
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-6">
-                    <div id="WebGLCanvas">
-                        <script type="text/javascript" src="lib/viewer.js"></script>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div id="editor">
-                        function foo(items) {
-                            var x = "All this is syntax highlighted";
-                            return x;
-                        }
-                    </div>
-                </div>
-            </div>
+        <div id="editor">
+# This example is meant to be used from within the CadQuery module of FreeCAD.
+import cadquery
+
+# The dimensions of the box. These can be modified rather than changing the
+# object's code directly.
+length = 10.0
+height = 10.0
+thickness = 10.0
+
+# Create a 3D box based on the dimension variables above
+result = cadquery.Workplane("XY").box(length, height, thickness)
+
+# Render the solid using CQGI here
+        </div>
+        <div id="WebGLCanvas">
+            <script type="text/javascript" src="lib/viewer.js"></script>
         </div>
     </div>
 
