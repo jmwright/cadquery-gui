@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/cadquery.css">
     <title>CadQuery GUI</title>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
@@ -37,6 +37,7 @@
                 <li><a href="#"><span class="glyphicon glyphicon-upload"> Download</span></a></li>
               </ul>
             </li>
+            <li><a id="validate-button" href="#" data-toggle="tooltip" title="Validate Script"><span class="glyphicon glyphicon-ok"></span></a></li>
             <li><a id="run-button" href="#" data-toggle="tooltip" title="Run Script"><span class="glyphicon glyphicon-play"></span></a></li>
             <li><a href="#" data-toggle="tooltip" title="Front View">F</a></li>
             <li><a href="#" data-toggle="tooltip" title="Right Side View">R</a></li>
@@ -63,16 +64,26 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-    <script type="text/javascript" src="assets/js/three.min.js"></script>
-    <script type="text/javascript" src="assets/js/Detector.js"></script>
-    <script type="text/javascript" src="assets/js/CanvasRenderer.js"></script>
-    <script type="text/javascript" src="assets/js/Projector.js"></script>
-    <script type="text/javascript" src="assets/js/OrbitControls.js"></script>
-    <script type="text/javascript" src="assets/js/jquery-2.2.2.min.js"></script>
+    <script type="text/javascript" src="vendor/js/jquery-2.2.2.min.js"></script>
     <script>window.jQuery = window.$ = typeof module === 'object' ? module.exports : jQuery</script>
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/js/OBJLoader.js"></script>
+    <script type="text/javascript" src="vendor/js/bootstrap.min.js"></script>
+
+    <!--3D related third-party JavaScripts-->
+    <script type="text/javascript" src="vendor/js/three/three.min.js"></script>
+    <script type="text/javascript" src="vendor/js/three/Detector.js"></script>
+    <script type="text/javascript" src="vendor/js/three/TrackballControls.js"></script>
+    <script type="text/javascript" src="vendor/js/threex/dragpancontrols.js"></script>
+
+    <!--CQ specific JavaScripts-->
+    <script type="text/javascript" src="assets/js/cqlib/mviewer.js"></script>
+
+    <!--Main JavaScript that handles the grunt work of making the UI usable-->
     <script type="text/javascript" src="assets/js/cadquery.js"></script>
+
+    <!--<script type="text/javascript" src="assets/js/CanvasRenderer.js"></script>
+    <script type="text/javascript" src="assets/js/Projector.js"></script>-->
+    <!--<script type="text/javascript" src="assets/js/3dlib/OrbitControls.js"></script>-->
+    <!--<script type="text/javascript" src="assets/js/OBJLoader.js"></script>-->
 
     <div class="container">
         <div id="editor">
@@ -90,12 +101,13 @@ result = cadquery.Workplane("XY").box(length, height, thickness)
 
 # Render the solid using CQGI here
         </div>
-        <div id="WebGLCanvas">
-            <script type="text/javascript" src="lib/viewer.js"></script>
+        <div id="three_container">
+            <!--TODO: Remove this file after MVIEWER is fully implemented-->
+            <!--<script type="text/javascript" src="assets/js/cqlib/viewer.js"></script>-->
         </div>
     </div>
 
-    <script src="assets/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="vendor/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");

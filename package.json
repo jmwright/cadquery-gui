@@ -1,6 +1,6 @@
 {
-  "name"    : "cadquery-gui",
-  "version" : "0.1.0",
+  "name": "cadquery-gui",
+  "version": "0.1.0",
   "description": "A GUI for the CadQuery library.",
   "license": "Apache-2.0",
   "author": {
@@ -9,15 +9,16 @@
     "url": "https://github.com/jmwright"
   },
   "repository": {
-        "type" : "git",
-        "url" : "https://github.com/jmwright/cadquery-gui.git"
-      },
+    "type": "git",
+    "url": "https://github.com/jmwright/cadquery-gui.git"
+  },
   "main": "main.js",
   "scripts": {
     "start": "electron main.js"
   },
   "dependencies": {
-    "electron-reload": "^0.2.0"
+    "electron-reload": "^0.2.0",
+    "temp": "^0.8.3"
   },
   "devDependencies": {
     "electron-debug": "^0.5.0",

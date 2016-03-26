@@ -1,6 +1,6 @@
 'use strict';
 
-require('./assets/js/jquery-2.2.2.min.js');
+require('./vendor/js/jquery-2.2.2.min.js');
 const electron = require('electron');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
