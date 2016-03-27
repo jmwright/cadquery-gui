@@ -1,9 +1,11 @@
 'use strict';
 
 require('./vendor/js/jquery-2.2.2.min.js');
+const cqgi = require('./assets/js/cqlib/cqgi.js');
 const electron = require('electron');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
+const globalShortcut = electron.globalShortcut; // Allows us to add hotkeys
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -39,4 +41,14 @@ app.on('ready', function() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  // Register a 'ctrl+x' shortcut listener.
+  var ret = globalShortcut.register('F5', function() {
+    console.log('F5 is pressed');
+    cqgi.executeScript();
+  });
+
+  if (!ret) {
+    console.log('registration failed');
+  }
 });
