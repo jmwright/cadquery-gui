@@ -177,7 +177,7 @@ var MVIEWER = function() {
             scene.remove(currentObject);
         }
         //load new model
-        new THREE.JSONLoader().createModel(data, function(geometry) {
+        new THREE.JSONLoader().parse(data, function(geometry) {
 
             //var material = new THREE.MeshPhongMaterial( {
             //    ambient: 0x030303,

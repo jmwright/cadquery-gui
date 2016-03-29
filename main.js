@@ -45,7 +45,9 @@ app.on('ready', function() {
   // Register a 'ctrl+x' shortcut listener.
   var ret = globalShortcut.register('F5', function() {
     console.log('F5 is pressed');
-    cqgi.executeScript();
+
+    // TODO: Fix hot keys once code is properly modularized
+    //executeScript();
   });
 
   if (!ret) {
