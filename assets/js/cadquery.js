@@ -16,7 +16,7 @@ $(document).ready(function() {
         initialView: 'ISO',
         width: 800,
         height: 600,
-        containerId: "three_container"
+        containerId: "modelview"
     });
 });
 
@@ -35,13 +35,17 @@ function executeScript() {
         if (err !== null) {
           console.log("Error closing file object: " + err);
         }
-        console.log(scriptText);
+        //console.log(scriptText);
         // Execute the script using the python interpreter
         exec("python " + info.path, function(error, stdout, stderr) {
           if (error !== undefined) {
-              console.log(stdout.trim());
+              //console.log(stdout.trim());
 
-              MVIEWER.load(stdout.trim());
+              var lines = stdout.trim().split('\n');
+              lines.splice(0, 1);
+              var newtext = lines.join('\n');
+              var jsonObj = JSON.parse(newtext);
+              MVIEWER.load(jsonObj);
           }
           else {
               console.log(`exec error: ${error}; stderr: ${stderr}`);

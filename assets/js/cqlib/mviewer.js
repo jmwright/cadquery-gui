@@ -42,7 +42,9 @@ var MVIEWER = function() {
     };
 
     function safeDistance() {
+        // if(currentObject !== undefined && currentObject !== null) {
         return currentObject.geometry.boundingSphere.radius * 1.6;
+        // }
     }
 
     function setupCamera(geometry) {
@@ -156,7 +158,7 @@ var MVIEWER = function() {
         //Create axis (point1, point2, colour)
         function createAxis(p1, p2, color) {
             var line, lineGeometry = new THREE.Geometry(),
-                lineMat = new THREE.LineBasicMaterial({color: color, lineWidth: 2});
+                lineMat = new THREE.LineBasicMaterial({color: color});
             lineGeometry.vertices.push(p1, p2);
             line = new THREE.Line(lineGeometry, lineMat);
             scene.add(line);
@@ -176,54 +178,53 @@ var MVIEWER = function() {
         if ( currentObject ) {
             scene.remove(currentObject);
         }
+
         //load new model
-        new THREE.JSONLoader().parse(data, function(geometry) {
+        var loader = new THREE.JSONLoader();
+        var model = loader.parse(data);
 
-            //var material = new THREE.MeshPhongMaterial( {
-            //    ambient: 0x030303,
-            //    color: 0x22ff11,
-            //    specular: 0x009900,
-            //    shininess: 10,
-            //    shading: THREE.FlatShading } );
+        //var material = new THREE.MeshPhongMaterial( {
+        //    ambient: 0x030303,
+        //    color: 0x22ff11,
+        //    specular: 0x009900,
+        //    shininess: 10,
+        //    shading: THREE.FlatShading } );
 
-            //var material  = new THREE.MeshNormalMaterial({
-            //     wireframe:isWireFrame,
-            //     shading: THREE.SmoothShading
-            //    } );
-            //var material = new THREE.MeshBasicMaterial({
-            //   color: 0x11ff11,
-            //
-            //});
-            //var material = new THREE.MeshLambertMaterial( { color: 0x11ff11, shading: THREE.SmoothShading } );
-            //var material = new THREE.MeshFaceMaterial();
-            //var material = new THREE.MeshBasicMaterial( { color: 0x44ffaa, wireframe: false ,doubleSided: true } )
-            var mesh  = new THREE.Mesh(geometry, material);
+        //var material  = new THREE.MeshNormalMaterial({
+        //     wireframe:isWireFrame,
+        //     shading: THREE.SmoothShading
+        //    } );
+        //var material = new THREE.MeshBasicMaterial({
+        //   color: 0x11ff11,
+        //
+        //});
+        //var material = new THREE.MeshLambertMaterial( { color: 0x11ff11, shading: THREE.SmoothShading } );
+        //var material = new THREE.MeshFaceMaterial();
+        //var material = new THREE.MeshBasicMaterial( { color: 0x44ffaa, wireframe: false ,doubleSided: true } )
+        var mesh  = new THREE.Mesh(model.geometry, material);
 
+        setupCamera(model.geometry);
 
-            setupCamera(geometry);
+        scene.add(mesh);
+        console.log(mesh);
+        currentObject = mesh;
 
-            scene.add(mesh);
-            currentObject = mesh;
+        //compute center
+        model.geometry.computeBoundingBox();
+        var bb = model.geometry.boundingBox;
+        var centerX = 0.5 * (bb.max.x - bb.min.x);
+        var centerY = 0.5 * (bb.max.y - bb.min.y);
+        var centerZ = 0.5 * (bb.max.z - bb.min.z);
+        centroid = new THREE.Vector3(centerX,centerY,centerZ);
+        //console.debug("Centroid is:")
+        //console.debug(centroid)
 
-            //compute center
-            geometry.computeBoundingBox();
-            var bb = geometry.boundingBox;
-            var centerX = 0.5 * (bb.max.x - bb.min.x);
-            var centerY = 0.5 * (bb.max.y - bb.min.y);
-            var centerZ = 0.5 * (bb.max.z - bb.min.z);
-            centroid = new THREE.Vector3(centerX,centerY,centerZ);
-            //console.debug("Centroid is:")
-            //console.debug(centroid)
+        //axes.. based on object size
+        debugAxis(mesh.geometry.boundingSphere.radius * 2.0);
 
-            //axes.. based on object size
-            debugAxis(mesh.geometry.boundingSphere.radius * 2.0);
-
-            //THREE.GeometryUtils.center( geometry );
-            //camera.lookAt( scene.position );
-            //camera.target.position.copy( new THREE.Vector3(50,0,0));
-
-
-        });
+        //THREE.GeometryUtils.center( geometry );
+        //camera.lookAt( scene.position );
+        //camera.target.position.copy( new THREE.Vector3(50,0,0));
 
         var d = safeDistance();
         var light = new THREE.SpotLight( 0xaaaaaa );
@@ -235,7 +236,6 @@ var MVIEWER = function() {
         scene.add(light);
 
         scene.add ( new THREE.AmbientLight( 0xaaaaaa ) );
-
 
         if (firstTimeLoad){
             setCameraView(settings.initialView);
@@ -289,8 +289,8 @@ var MVIEWER = function() {
     //exported stuff
     return {
         init: function(opts){
-            $.extend(settings,opts);
-            if( !init( ) )  animate();
+            $.extend(settings, opts);
+            if(!init())  animate();
         },
         toggleRotate : function(){
             autoRotate = !autoRotate;

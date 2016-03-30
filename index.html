@@ -69,7 +69,7 @@
     <script type="text/javascript" src="vendor/js/bootstrap.min.js"></script>
 
     <!--3D related third-party JavaScripts-->
-    <script type="text/javascript" src="vendor/js/three/three.min.js"></script>
+    <script type="text/javascript" src="vendor/js/three/three.js"></script>
     <script type="text/javascript" src="vendor/js/three/Detector.js"></script>
     <script type="text/javascript" src="vendor/js/three/TrackballControls.js"></script>
     <script type="text/javascript" src="vendor/js/threex/dragpancontrols.js"></script>
@@ -141,12 +141,11 @@ JSON_TEMPLATE= """\
     "DbgColor" : 15658734,
     "DbgIndex" : 0,
     "DbgName" : "Material",
-    "colorAmbient" : [0.0, 0.0, 0.0],
     "colorDiffuse" : [0.6400000190734865, 0.10179081114814892, 0.126246120426746],
     "colorSpecular" : [0.5, 0.5, 0.5],
     "shading" : "Lambert",
     "specularCoef" : 50,
-    "transparency" : 1.0,
+    "opacity" : 1.0,
     "vertexColors" : false
     }],
 
@@ -189,7 +188,7 @@ print(buildresult)
 
 # Render the solid using CQGI here
         </div>
-        <div id="three_container">
+        <div id="modelview" style="width:100%;height:100%;">
             <!--TODO: Remove this file after MVIEWER is fully implemented-->
             <!--<script type="text/javascript" src="assets/js/cqlib/viewer.js"></script>-->
         </div>
