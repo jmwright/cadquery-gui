@@ -106,7 +106,7 @@ var MVIEWER = function() {
             renderer.setClearColor(settings.clearColor, 1);
         }
         var width = $('#modelview').width();
-        renderer.setSize(width,width * 0.8);
+        renderer.setSize(width, width * 0.8);
 
         $(window).resize(function() {
             var width = $('#modelview').width();

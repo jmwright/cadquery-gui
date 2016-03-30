@@ -3,7 +3,7 @@ body {
      use the complete page */
     margin: 0;
     overflow: hidden;
-    background-color: black;
+    background-color: #696969;
     font-size: 20px;
 }
 
@@ -13,7 +13,7 @@ body {
     left:0px;
     z-index:1;
     width:33%;
-    height:50%;
+    height:75%;
 }
 
 #WebGLCanvas {
