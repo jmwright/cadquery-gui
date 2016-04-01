@@ -1,7 +1,8 @@
+/*jslint vars: true, plusplus: true, devel: true, nomen: true, indent: 4, maxerr: 50 */
+/*globals process: false, require: false, __dirname: false*/
 'use strict';
 
-require('./vendor/js/jquery-2.2.2.min.js');
-const cqgi = require('./assets/js/cqlib/cqgi.js');
+//require('./vendor/js/jquery-2.2.2.min.js');
 const electron = require('electron');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.

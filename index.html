@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/cadquery.css">
     <title>CadQuery GUI</title>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
@@ -12,7 +13,7 @@
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -22,7 +23,7 @@
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  data-toggle="tooltip" title="File Menu"><span class="glyphicon glyphicon-file"></span> <span class="caret"></span></a>
@@ -38,16 +39,16 @@
               </ul>
             </li>
             <li><a id="validate-button" href="#" data-toggle="tooltip" title="Validate Script"><span class="glyphicon glyphicon-ok"></span></a></li>
+            <li><a id="validate-button" href="#" data-toggle="tooltip" title="Debug Script"><span class="fa fa-bug fa-lg" style="margin-top:3px;"></span></a></li>
             <li><a id="run-button" href="#" data-toggle="tooltip" title="Run Script"><span class="glyphicon glyphicon-play"></span></a></li>
-            <li><a href="#" data-toggle="tooltip" title="Front View">F</a></li>
-            <li><a href="#" data-toggle="tooltip" title="Right Side View">R</a></li>
-            <li><a href="#" data-toggle="tooltip" title="Left Side View">L</a></li>
-            <li><a href="#" data-toggle="tooltip" title="Top View">T</a></li>
-            <li><a href="#" data-toggle="tooltip" title="Bottom View">B</a></li>
-            <li><a href="#" data-toggle="tooltip" title="Isometric View">I</a></li>
+            <li><a href="#" data-toggle="tooltip" title="Front View (5)">F</a></li>
+            <li><a href="#" data-toggle="tooltip" title="Right Side View (6)">R</a></li>
+            <li><a href="#" data-toggle="tooltip" title="Left Side View (4)">L</a></li>
+            <li><a href="#" data-toggle="tooltip" title="Top View (8)">T</a></li>
+            <li><a href="#" data-toggle="tooltip" title="Bottom View (2)">B</a></li>
+            <li><a href="#" data-toggle="tooltip" title="Isometric View (+)">I</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-console"></span></a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -73,6 +74,7 @@
     <script type="text/javascript" src="vendor/js/three/Detector.js"></script>
     <script type="text/javascript" src="vendor/js/three/TrackballControls.js"></script>
     <script type="text/javascript" src="vendor/js/threex/dragpancontrols.js"></script>
+    <script src="vendor/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
 
     <!--CQ specific JavaScripts-->
     <script type="text/javascript" src="assets/js/cqlib/mviewer.js"></script>
@@ -80,36 +82,25 @@
     <!--Main JavaScript that handles the grunt work of making the UI usable-->
     <script type="text/javascript" src="assets/js/cadquery.js"></script>
 
-    <!--<script type="text/javascript" src="assets/js/CanvasRenderer.js"></script>
-    <script type="text/javascript" src="assets/js/Projector.js"></script>-->
-    <!--<script type="text/javascript" src="assets/js/3dlib/OrbitControls.js"></script>-->
-    <!--<script type="text/javascript" src="assets/js/OBJLoader.js"></script>-->
-
     <div class="container">
-        <div id="editor">
-# This example is meant to be used from within the CadQuery module of FreeCAD.
-import cadquery
+<div id="editor"># 'import cadquery as cq' is run for you
 
-# The dimensions of the box. These can be modified rather than changing the
-# object's code directly.
+# These can be modified rather than changing the box's code directly
 length = 10.0
 height = 10.0
 thickness = 10.0
 
 # Create a 3D box based on the dimension variables above
-result = cadquery.Workplane("XY").box(length, height, thickness)
+result = cq.Workplane("XY").box(length, height, thickness)
 
 # Render the solid using CQGI
 build_object(result)
         </div>
         <div id="modelview" style="width:100%;height:100%;margin-left:25%;">
-            <!--TODO: Remove this file after MVIEWER is fully implemented-->
-            <!--<script type="text/javascript" src="assets/js/cqlib/viewer.js"></script>-->
         </div>
     </div>
-
-    <script src="vendor/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
+        'use strict';
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");
         editor.getSession().setMode("ace/mode/python");

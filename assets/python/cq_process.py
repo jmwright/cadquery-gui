@@ -103,22 +103,9 @@ def main(argv):
     for f in tess[1]:
         mesher.addTriangleFace(f[0],f[1], f[2])
     buildresult = mesher.toJson()
+
+    # Passing the JSON to stdout will allow the GUI to render the object
     print(buildresult)
-
-    # TODO: Add proper CQGI implementation here
-    # s = result.val()
-    # tess = s.tessellate(0.1) #TODO: user provided tolerance needed
-
-    # mesher = JsonMesh() #warning: needs to be changed to remove buildTime and exportTime!!!
-    # #add vertices
-    # for vec in tess[0]:
-    #     mesher.addVertex(vec.x, vec.y, vec.z)
-
-    # #add faces
-    # for f in tess[1]:
-    #     mesher.addTriangleFace(f[0],f[1], f[2])
-    # buildresult = mesher.toJson()
-    # print(buildresult)
 
 class JsonMesh(object):
     def __init__(self):
