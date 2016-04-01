@@ -1,5 +1,5 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, indent: 4, maxerr: 50 */
-/*globals $: false, require: false, editor: false*/
+/*globals $: false, require: false, editor: false, process: false*/
 'use strict';
 // const cqgi = require('./assets/js/cqlib/cqgi.js');
 var temp = require('temp');
@@ -35,11 +35,12 @@ function executeScript() {
         if (err !== null) {
           console.log("Error closing file object: " + err);
         }
+
         //console.log(scriptText);
         // Execute the script using the python interpreter
-        exec("python " + info.path, function(error, stdout, stderr) {
-          if (error !== undefined) {
-              //console.log(stdout.trim());
+        exec("python " + process.cwd() + "/assets/python/cq_process.py --file=" + info.path + " --outputFormat=threeJS", function(error, stdout, stderr) {
+          if (error === undefined || error === null) {
+              console.log(stdout.trim());
 
               var lines = stdout.trim().split('\n');
               lines.splice(0, 1);

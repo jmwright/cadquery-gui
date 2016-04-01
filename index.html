@@ -90,79 +90,6 @@
 # This example is meant to be used from within the CadQuery module of FreeCAD.
 import cadquery
 
-class JsonMesh(object):
-    def __init__(self):
-
-        self.vertices = [];
-        self.faces = [];
-        self.nVertices = 0;
-        self.nFaces = 0;
-
-    def addVertex(self,x,y,z):
-        self.nVertices += 1;
-        self.vertices.extend([x,y,z]);
-
-    #add triangle composed of the three provided vertex indices
-    def addTriangleFace(self, i,j,k):
-        #first position means justa simple triangle
-        self.nFaces += 1;
-        self.faces.extend([0,int(i),int(j),int(k)]);
-
-    """
-        Get a json model from this model.
-        For now we'll forget about colors, vertex normals, and all that stuff
-    """
-    def toJson(self):
-        return JSON_TEMPLATE % {
-            'vertices' : str(self.vertices),
-            'faces' : str(self.faces),
-            'nVertices': self.nVertices,
-            'nFaces' : self.nFaces
-        };
-
-JSON_TEMPLATE= """\
-{
-    "metadata" :
-    {
-        "formatVersion" : 3,
-        "generatedBy"   : "ParametricParts",
-        "vertices"      : %(nVertices)d,
-        "faces"         : %(nFaces)d,
-        "normals"       : 0,
-        "colors"        : 0,
-        "uvs"           : 0,
-        "materials"     : 1,
-        "morphTargets"  : 0
-    },
-
-    "scale" : 1.0,
-
-    "materials": [    {
-    "DbgColor" : 15658734,
-    "DbgIndex" : 0,
-    "DbgName" : "Material",
-    "colorDiffuse" : [0.6400000190734865, 0.10179081114814892, 0.126246120426746],
-    "colorSpecular" : [0.5, 0.5, 0.5],
-    "shading" : "Lambert",
-    "specularCoef" : 50,
-    "opacity" : 1.0,
-    "vertexColors" : false
-    }],
-
-    "vertices": %(vertices)s,
-
-    "morphTargets": [],
-
-    "normals": [],
-
-    "colors": [],
-
-    "uvs": [[]],
-
-    "faces": %(faces)s
-}
-"""
-
 # The dimensions of the box. These can be modified rather than changing the
 # object's code directly.
 length = 10.0
@@ -172,21 +99,8 @@ thickness = 10.0
 # Create a 3D box based on the dimension variables above
 result = cadquery.Workplane("XY").box(length, height, thickness)
 
-s = result.val()
-tess = s.tessellate(0.1) #TODO: user provided tolerance needed
-
-mesher = JsonMesh() #warning: needs to be changed to remove buildTime and exportTime!!!
-#add vertices
-for vec in tess[0]:
-    mesher.addVertex(vec.x, vec.y, vec.z)
-
-#add faces
-for f in tess[1]:
-    mesher.addTriangleFace(f[0],f[1], f[2])
-buildresult = mesher.toJson()
-print(buildresult)
-
-# Render the solid using CQGI here
+# Render the solid using CQGI
+build_object(result)
         </div>
         <div id="modelview" style="width:100%;height:100%;margin-left:25%;">
             <!--TODO: Remove this file after MVIEWER is fully implemented-->
