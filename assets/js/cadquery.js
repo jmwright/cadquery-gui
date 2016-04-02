@@ -44,9 +44,9 @@ function executeScript() {
 
               var lines = stdout.trim().split('\n');
               lines.splice(0, 1);
-              var newtext = lines.join('\n');
-              var jsonObj = JSON.parse(newtext);
-              MVIEWER.load(jsonObj);
+              var results = JSON.parse(lines.join('\n'));
+              // TODO: Rework MVIEWER to accept multiple objects to render
+              MVIEWER.load(results);
           }
           else {
               console.log(`exec error: ${error}; stderr: ${stderr}`);

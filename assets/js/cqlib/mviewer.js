@@ -26,9 +26,9 @@
 /*globals THREE: false, Detector: false, $: false*/
 'use strict';
 var MVIEWER = function() {
-    var scene, renderer, composer;
+    var scene, renderer;
     var camera, cameraControls;
-    var currentObject;
+    var currentObjects = []; // Holds all of the objects that we are rendering
     var cameraSetup = false;
     var autoRotate = false;
     var isWireFrame = false;
@@ -42,9 +42,7 @@ var MVIEWER = function() {
     };
 
     function safeDistance() {
-        // if(currentObject !== undefined && currentObject !== null) {
-        return currentObject.geometry.boundingSphere.radius * 1.6;
-        // }
+        return currentObjects[0].geometry.boundingSphere.radius * 2.0;
     }
 
     function setupCamera(geometry) {
@@ -122,7 +120,7 @@ var MVIEWER = function() {
         camera  = new THREE.PerspectiveCamera(35, settings.width / settings.height, 1, 10000 );
         camera.position.set(0, 0, 15);
         scene.add(camera);
-        //scene.fog = new THREE.Fog( 0x000000, 250, 1400 );
+
         // create a camera contol
         cameraControls  = new THREE.TrackballControls( camera, document.getElementById(settings.containerId) );
 
@@ -172,70 +170,61 @@ var MVIEWER = function() {
 
 
 //loads geometry.
-    function loadGeometry( data ) {
+    function loadGeometry(data) {
         clearScene();
 
-        if ( currentObject ) {
-            scene.remove(currentObject);
+        // Make sure that we remove all objects from the scene
+        if (currentObjects.length > 0) {
+            for (var i = 0; i < currentObjects.length; i++) {
+                scene.remove(currentObjects[i]);
+            }
         }
 
-        //load new model
-        var loader = new THREE.JSONLoader();
-        var model = loader.parse(data);
+        // Step through all the results and render them
+        for(var j = 0; j < data.allResults.length; j++){
+            //load new model
+            var loader = new THREE.JSONLoader();
+            var model = loader.parse(data.allResults[j]);
 
-        //var material = new THREE.MeshPhongMaterial( {
-        //    ambient: 0x030303,
-        //    color: 0x22ff11,
-        //    specular: 0x009900,
-        //    shininess: 10,
-        //    shading: THREE.FlatShading } );
+            var mesh  = new THREE.Mesh(model.geometry, material);
 
-        //var material  = new THREE.MeshNormalMaterial({
-        //     wireframe:isWireFrame,
-        //     shading: THREE.SmoothShading
-        //    } );
-        //var material = new THREE.MeshBasicMaterial({
-        //   color: 0x11ff11,
-        //
-        //});
-        //var material = new THREE.MeshLambertMaterial( { color: 0x11ff11, shading: THREE.SmoothShading } );
-        //var material = new THREE.MeshFaceMaterial();
-        //var material = new THREE.MeshBasicMaterial( { color: 0x44ffaa, wireframe: false ,doubleSided: true } )
-        var mesh  = new THREE.Mesh(model.geometry, material);
+            setupCamera(model.geometry);
 
-        setupCamera(model.geometry);
+            scene.add(mesh);
 
-        scene.add(mesh);
-        console.log(mesh);
-        currentObject = mesh;
+            currentObjects[j] = mesh;
 
-        //compute center
-        model.geometry.computeBoundingBox();
-        var bb = model.geometry.boundingBox;
-        var centerX = 0.5 * (bb.max.x - bb.min.x);
-        var centerY = 0.5 * (bb.max.y - bb.min.y);
-        var centerZ = 0.5 * (bb.max.z - bb.min.z);
-        centroid = new THREE.Vector3(centerX,centerY,centerZ);
-        //console.debug("Centroid is:")
-        //console.debug(centroid)
+            // We only want to do these things for the first object
+            if(j === 0) {
+                //compute center
+                model.geometry.computeBoundingBox();
+                var bb = model.geometry.boundingBox;
+                var centerX = 0.5 * (bb.max.x - bb.min.x);
+                var centerY = 0.5 * (bb.max.y - bb.min.y);
+                var centerZ = 0.5 * (bb.max.z - bb.min.z);
+                centroid = new THREE.Vector3(centerX, centerY, centerZ);
+                //console.debug("Centroid is:")
+                //console.debug(centroid)
 
-        //axes.. based on object size
-        debugAxis(mesh.geometry.boundingSphere.radius * 2.0);
+                //axes.. based on object size
+                debugAxis(mesh.geometry.boundingSphere.radius * 2.0);
+            }
+        }
 
         //THREE.GeometryUtils.center( geometry );
         //camera.lookAt( scene.position );
         //camera.target.position.copy( new THREE.Vector3(50,0,0));
 
         var d = safeDistance();
-        var light = new THREE.SpotLight( 0xaaaaaa );
+        var light = new THREE.SpotLight(0xaaaaaa);
         light.position.set(d, d, d);
         scene.add(light);
 
-        light = new THREE.SpotLight( 0xaaaaaa );
+        light = new THREE.SpotLight(0xaaaaaa);
         light.position.set(-d, d, d);
         scene.add(light);
 
-        scene.add ( new THREE.AmbientLight( 0xaaaaaa ) );
+        scene.add (new THREE.AmbientLight(0xaaaaaa));
 
         if (firstTimeLoad){
             setCameraView(settings.initialView);

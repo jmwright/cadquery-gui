@@ -5,12 +5,12 @@ from cadquery import cqgi
 
 usage = "Usage: cq_process.py --file=<cadquery_script> --outputFormat=<threeJS|etc> --parameters=<cadquery_parameters.txt>  [--outputFileName=<resulting_object_name.xxx>]"
 
-JSON_TEMPLATE= """\
+JSON_TEMPLATE = """\
 {
     "metadata" :
     {
         "formatVersion" : 3,
-        "generatedBy"   : "ParametricParts",
+        "generatedBy"   : "cadquery-gui",
         "vertices"      : %(nVertices)d,
         "faces"         : %(nFaces)d,
         "normals"       : 0,
@@ -90,22 +90,41 @@ def main(argv):
       user_script = content_file.read()
     build_result = cqgi.parse(user_script).build()
 
-    # Convert the object that was returned to JSON that we can render
-    s = build_result.first_result.val()
-    tess = s.tessellate(0.1) #TODO: user provided tolerance needed
+    # In case we have multipe objects to pass back
+    jsonMeshes = []
 
-    mesher = JsonMesh() #warning: needs to be changed to remove buildTime and exportTime!!!
-    #add vertices
-    for vec in tess[0]:
-        mesher.addVertex(vec.x, vec.y, vec.z)
+    # Step through all of the objects returned
+    for obj in build_result.results:
+        # Convert the object that was returned to JSON that we can render
+        s = obj.val()
+        tess = s.tessellate(0.1) #TODO: user provided tolerance needed
 
-    #add faces
-    for f in tess[1]:
-        mesher.addTriangleFace(f[0],f[1], f[2])
-    buildresult = mesher.toJson()
+        mesher = JsonMesh() #warning: needs to be changed to remove buildTime and exportTime!!!
+        #add vertices
+        for vec in tess[0]:
+            mesher.addVertex(vec.x, vec.y, vec.z)
+
+        #add faces
+        for f in tess[1]:
+            mesher.addTriangleFace(f[0],f[1], f[2])
+
+        jsonMeshes.append(mesher.toJson())
+
+    # Stuff all of the JSON meshes into an array so that the environment can display all of them
+    allJSONResults = '{"allResults": ['
+    i = 0
+    for curMesh in jsonMeshes:
+      allJSONResults += curMesh
+
+      # If there is only one object or this is the last object, we do not want a trailing comma
+      if i < len(jsonMeshes) - 1:
+        allJSONResults += ","
+
+      i += 1
+    allJSONResults += "]}"
 
     # Passing the JSON to stdout will allow the GUI to render the object
-    print(buildresult)
+    print(allJSONResults)
 
 class JsonMesh(object):
     def __init__(self):
