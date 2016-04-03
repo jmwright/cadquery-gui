@@ -4,12 +4,12 @@ body {
     margin: 0;
     overflow: hidden;
     background-color: #696969;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 #editor {
     position:absolute;
-    top:55px;
+    top:60px;
     left:0px;
     z-index:1;
     width:33%;
@@ -20,4 +20,12 @@ body {
     position:absolute;
     top:55px;
     left:0px;
+}
+
+.icon {
+    padding:0px;
+    padding-bottom: 10px;
+    margin:0px;
+    width:40px;
+    height:40px;
 }
