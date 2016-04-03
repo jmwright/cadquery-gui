@@ -1,5 +1,5 @@
 # cadquery-gui
-An Electron-based GUI for CadQuery. 
+An Electron-based GUI for [CadQuery](https://github.com/dcowden/cadquery/blob/master/README.md). 
 
 ***Note: This software is in the pre-alpha stage, and is not ready for production use.***
 
