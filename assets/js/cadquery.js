@@ -4,18 +4,27 @@
 var temp = require('temp');
 var fs   = require('fs');
 var exec = require('child_process').exec;
+var shell = require('electron').shell;
 
 $(document).ready(function() {
     $('#run-button').on('click', function() {
-        executeScript();
+      executeScript();
+    });
+
+    $('#docs').on('click', function() {
+      shell.openExternal('http://dcowden.github.io/cadquery/');
+    });
+
+    $('#videos').on('click', function() {
+      shell.openExternal('https://groups.google.com/forum/#!topic/cadquery/4wPfbwxjloQ');
     });
 
     //set up model viewer
     MVIEWER.init({
-        initialView: 'ISO',
-        width: 800,
-        height: 600,
-        containerId: "modelview"
+      initialView: 'ISO',
+      width: 800,
+      height: 600,
+      containerId: "modelview"
     });
 
     // TODO: Figure out how to get Ace editor to run properly in here
