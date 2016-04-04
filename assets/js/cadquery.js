@@ -19,6 +19,10 @@ $(document).ready(function() {
       shell.openExternal('https://groups.google.com/forum/#!topic/cadquery/4wPfbwxjloQ');
     });
 
+    $('#user_group').on('click', function() {
+      shell.openExternal('https://groups.google.com/forum/#!forum/cadquery');
+    });
+
     //set up model viewer
     MVIEWER.init({
       initialView: 'ISO',
