@@ -74,13 +74,21 @@ var MVIEWER = function() {
         else if(viewName == 'TOP'){
             setCameraPosition(0, 0, d);
         }
+        else if(viewName == 'BOTTOM'){
+            setCameraPosition(0, 0, -d);
+        }
         else if(viewName == 'LEFT'){
             setCameraPosition(0, d, 0);
+        }
+        else if(viewName == 'RIGHT'){
+            setCameraPosition(0, -d, 0);
         }
         else if(viewName == 'FRONT'){
             setCameraPosition(d, 0, 0);
         }
-
+        else if(viewName == 'BACK'){
+            setCameraPosition(-d, 0, 0);
+        }
     }
 
 // init the scene

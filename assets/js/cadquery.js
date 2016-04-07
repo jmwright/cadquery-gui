@@ -71,31 +71,31 @@ $(document).ready(function() {
     });
 
     $('#front_view').on('click', function() {
-      notImplementedYet();
+      MVIEWER.setView('FRONT');
     });
 
     $('#back_view').on('click', function() {
-      notImplementedYet();
+      MVIEWER.setView('BACK');
     });
 
     $('#top_view').on('click', function() {
-      notImplementedYet();
+      MVIEWER.setView('TOP');
     });
 
     $('#bottom_view').on('click', function() {
-      notImplementedYet();
+      MVIEWER.setView('BOTTOM');
     });
 
     $('#right_view').on('click', function() {
-      notImplementedYet();
+      MVIEWER.setView('RIGHT');
     });
 
     $('#left_view').on('click', function() {
-      notImplementedYet();
+      MVIEWER.setView('LEFT');
     });
 
     $('#iso_view').on('click', function() {
-      notImplementedYet();
+      MVIEWER.setView('ISO');
     });
 
     $('#zoom_to_fit').on('click', function() {
