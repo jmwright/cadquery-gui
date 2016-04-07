@@ -28,29 +28,30 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  data-toggle="tooltip" title="File Menu"><span class="glyphicon glyphicon-file"></span> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#" id="new_script"><span class="glyphicon glyphicon-plus"> New</span></a></li>
-                <li><a href="#" id="open_script"><span class="glyphicon glyphicon-open"> Open</span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-save"> Save</span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-import"> Import</span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-export"> Export</span></a></li>
+                <li><a href="#" id="new_script"><span class="glyphicon glyphicon-plus"></span> New (Ctrl+N)</a></li>
+                <li><a href="#" id="open_script"><span class="glyphicon glyphicon-open"></span> Open (Ctrl+O)</a></li>
+                <li><a href="#" id="save_script"><span class="glyphicon glyphicon-save"></span> Save (Ctrl+S)</a></li>
+                <li><a href="#" id="save_script_as"><span class="glyphicon glyphicon-save"></span> Save As</a></li>
+                <li><a href="#" id="import_object"><span class="glyphicon glyphicon-import"></span> Import</a></li>
+                <li><a href="#" id="export_object"><span class="glyphicon glyphicon-export"></span> Export</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#"><span class="glyphicon glyphicon-upload"> Upload</span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-upload"> Download</span></a></li>
+                <li><a href="#" id="upload_script"><span class="glyphicon glyphicon-upload"></span> Upload</a></li>
+                <li><a href="#" id="download_script"><span class="glyphicon glyphicon-upload"></span> Download</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#"><span class="glyphicon glyphicon-education"> Examples</span></a></li>
+                <li><a href="#" id="show_examples"><span class="glyphicon glyphicon-education"></span> Examples</a></li>
               </ul>
             </li>
-            <li><a id="validate-button" href="#" data-toggle="tooltip" title="Validate"><span class="glyphicon glyphicon-ok"></span></a></li>
-            <li><a id="validate-button" href="#" data-toggle="tooltip" title="Debug"><span class="fa fa-bug fa-lg" style="margin-top:3px;"></span></a></li>
-            <li><a id="run-button" href="#" data-toggle="tooltip" title="Build (F5)"><span class="glyphicon glyphicon-play"></span></a></li>
-            <li><a href="#" data-toggle="tooltip" title="Front View (5)"><img src="assets/images/icons/front_view.svg" alt="Front View" class="pull-left icon"/></a></li>
-            <li><a href="#" data-toggle="tooltip" title="Back View (5)"><img src="assets/images/icons/back_view.svg" alt="Back View" class="pull-left icon"/></a></li>
-            <li><a href="#" data-toggle="tooltip" title="Top View (8)"><img src="assets/images/icons/top_view.svg" alt="Top View" class="pull-left icon"/></a></li>
-            <li><a href="#" data-toggle="tooltip" title="Bottom View (2)"><img src="assets/images/icons/bottom_view.svg" alt="Bottom View" class="pull-left icon"/></a></li>
-            <li><a href="#" data-toggle="tooltip" title="Right Side View (6)"><img src="assets/images/icons/right_side_view.svg" alt="Right Side View" class="pull-left icon"/></a></li>
-            <li><a href="#" data-toggle="tooltip" title="Left Side View (4)"><img src="assets/images/icons/left_side_view.svg" alt="Left Side View" class="pull-left icon"/></a></li>
-            <li><a href="#" data-toggle="tooltip" title="Axiometric View (+)"><img src="assets/images/icons/axiometric_view.svg" alt="Axiometric View" class="pull-left icon"/></a></li>
-            <li><a href="#" data-toggle="tooltip" title="Zoom To Fit"><img src="assets/images/icons/zoom_all.svg" alt="Zoom To Fit" class="pull-left icon"/></a></li>
+            <li><a id="validate_button" href="#" data-toggle="tooltip" title="Validate"><span class="glyphicon glyphicon-ok"></span></a></li>
+            <li><a id="debug_button" href="#" data-toggle="tooltip" title="Debug"><span class="fa fa-bug fa-lg" style="margin-top:3px;"></span></a></li>
+            <li><a id="build_button" href="#" data-toggle="tooltip" title="Build (F5)"><span class="glyphicon glyphicon-play"></span></a></li>
+            <li><a href="#" id="front_view" data-toggle="tooltip" title="Front View (5)"><img src="assets/images/icons/front_view.svg" alt="Front View" class="pull-left icon"/></a></li>
+            <li><a href="#" id="back_view" data-toggle="tooltip" title="Back View (5)"><img src="assets/images/icons/back_view.svg" alt="Back View" class="pull-left icon"/></a></li>
+            <li><a href="#" id="top_view" data-toggle="tooltip" title="Top View (8)"><img src="assets/images/icons/top_view.svg" alt="Top View" class="pull-left icon"/></a></li>
+            <li><a href="#" id="bottom_view" data-toggle="tooltip" title="Bottom View (2)"><img src="assets/images/icons/bottom_view.svg" alt="Bottom View" class="pull-left icon"/></a></li>
+            <li><a href="#" id="right_view" data-toggle="tooltip" title="Right Side View (6)"><img src="assets/images/icons/right_side_view.svg" alt="Right Side View" class="pull-left icon"/></a></li>
+            <li><a href="#" id="left_view" data-toggle="tooltip" title="Left Side View (4)"><img src="assets/images/icons/left_side_view.svg" alt="Left Side View" class="pull-left icon"/></a></li>
+            <li><a href="#" id="iso_view" data-toggle="tooltip" title="Isometric View (+)"><img src="assets/images/icons/axiometric_view.svg" alt="Isometric View" class="pull-left icon"/></a></li>
+            <li><a href="#" id="zoom_to_fit" data-toggle="tooltip" title="Zoom To Fit"><img src="assets/images/icons/zoom_all.svg" alt="Zoom To Fit" class="pull-left icon"/></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -59,10 +60,10 @@
                 <!-- <li><a href="#">Execution</a></li>
                 <li><a href="#">Editor</a></li>
                 <li><a href="#">3D Environment</a></li> -->
-                <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
+                <li><a href="#" id="settings_button"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                <li><a href="#" id="about_button"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#" data-toggle="tooltip" title="Online Service Access"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+                <li><a href="#" id="sign_in_button" data-toggle="tooltip" title="Online Service Access"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
               </ul>
             </li>
           </ul>

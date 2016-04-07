@@ -4,11 +4,13 @@
 
 var shell = require('electron').shell;
 var remote = require('remote');
- var dialog = remote.require('dialog');
- var fs = require('fs');
+var dialog = remote.require('dialog');
+var fs = require('fs');
+
+var gFileName = null;
 
 $(document).ready(function() {
-    $('#run-button').on('click', function() {
+    $('#build_button').on('click', function() {
       BUILDER.build();
     });
 
@@ -25,17 +27,91 @@ $(document).ready(function() {
     });
 
     $('#new_script').on('click', function() {
-      editor.setValue("# 'import cadquery as cq' is run for you\n\n#Renders your scripted object\nbuild_object(result)");
+      newScript();
     });
 
     $('#open_script').on('click', function() {
-      dialog.showOpenDialog({ filters: [{ name: 'Python', extensions: ['py'] }]}, function (fileNames) {
-        if (fileNames === undefined) return;
-        var fileName = fileNames[0];
-        fs.readFile(fileName, 'utf-8', function (err, data) {
-          editor.setValue(data);
-        });
-      });
+      openScript();
+    });
+
+    $('#save_script').on('click', function() {
+      saveScript();
+    });
+
+    $('#save_script_as').on('click', function() {
+      saveScriptAs();
+    });
+
+    $('#import_object').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#export_object').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#upload_script').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#download_script').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#show_examples').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#validate_button').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#debug_button').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#front_view').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#back_view').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#top_view').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#bottom_view').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#right_view').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#left_view').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#iso_view').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#zoom_to_fit').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#settings_button').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#about_button').on('click', function() {
+      notImplementedYet();
+    });
+
+    $('#sign_in_button').on('click', function() {
+      notImplementedYet();
     });
 
     //set up model viewer
@@ -46,3 +122,49 @@ $(document).ready(function() {
       containerId: "modelview"
     });
 });
+
+function newScript() {
+  // We're starting a new script
+  gFileName = null;
+
+  editor.setValue("# 'import cadquery as cq' is run for you\n\n#Renders your scripted object\nbuild_object(result)");
+}
+
+function openScript() {
+  dialog.showOpenDialog({ filters: [{ name: 'Python', extensions: ['py'] }]}, function (fileNames) {
+    if (fileNames === undefined) return;
+    var fileName = fileNames[0];
+    gFileName = fileName; // Keep a reference to this for later
+    fs.readFile(fileName, 'utf-8', function (err, data) {
+      editor.setValue(data);
+    });
+  });
+}
+
+function saveScript() {
+  if (gFileName === undefined || gFileName === null) {
+    saveScriptAs();
+    return;
+  }
+  else {
+    fs.writeFile(gFileName, editor.getValue(), function (err) {
+      console.log(err);
+    });
+  }
+}
+
+function saveScriptAs() {
+  dialog.showSaveDialog({ filters: [{ name: 'Python', extensions: ['py'] }]}, function (fileName) {
+    if (fileName === undefined) return;
+    // We want to keep a reference to the file for saving later
+    gFileName = fileName;
+
+    fs.writeFile(fileName, editor.getValue(), function (err) {
+      console.log(err);
+    });
+  });
+}
+
+function notImplementedYet() {
+  dialog.showMessageBox({ message: "This feature has not been implemented yet. Please go to the following Google Group to request that this feature be implemented.\nhttps://groups.google.com/forum/#!forum/cadquery", buttons: ["OK"] });
+}

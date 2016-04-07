@@ -17,6 +17,7 @@
     "start": "electron main.js"
   },
   "dependencies": {
+    "electron-localshortcut": "^0.6.0",
     "electron-reload": "^0.2.0",
     "temp": "^0.8.3"
   },

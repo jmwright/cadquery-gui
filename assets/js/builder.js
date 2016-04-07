@@ -29,7 +29,7 @@ var BUILDER = function() {
                 var lines = stdout.trim().split('\n');
                 lines.splice(0, 1);
                 var results = JSON.parse(lines.join('\n'));
-                // TODO: Rework MVIEWER to accept multiple objects to render
+                // MVIEWER will display all of the objects that are in the returned JSON
                 MVIEWER.load(results);
             }
             else {

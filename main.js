@@ -5,7 +5,7 @@
 const electron = require('electron');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
-const globalShortcut = electron.globalShortcut; // Allows us to add hotkeys
+const localShortcut = require('electron-localshortcut'); // Allows us to add hotkeys
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -42,14 +42,31 @@ app.on('ready', function() {
     mainWindow = null;
   });
 
-  // Register an 'F5' key shortcut listener.
-  var ret = globalShortcut.register('F5', function() {
-    console.log('F5 is pressed');
+  // Register an 'F5' key shortcut listener to execute a script
+  var ret = localShortcut.register(mainWindow, 'F5', function() {
+    // console.log('F5 pressed');
 
     mainWindow.webContents.executeJavaScript("BUILDER.build();");
   });
 
-  if (!ret) {
-    console.log('registration failed');
-  }
+  // Register an 'Ctrl+S' key shortcut listener to execute a script
+  ret = localShortcut.register(mainWindow, 'CommandOrControl+S', function() {
+    // console.log('Ctrl+S pressed');
+
+    mainWindow.webContents.executeJavaScript("saveScript();");
+  });
+
+  // Register an 'Ctrl+N' key shortcut listener to execute a script
+  ret = localShortcut.register(mainWindow, 'CommandOrControl+N', function() {
+    // console.log('Ctrl+S pressed');
+
+    mainWindow.webContents.executeJavaScript("newScript();");
+  });
+
+  // Register an 'Ctrl+O' key shortcut listener to execute a script
+  ret = localShortcut.register(mainWindow, 'CommandOrControl+O', function() {
+    // console.log('Ctrl+O pressed');
+
+    mainWindow.webContents.executeJavaScript("openScript();");
+  });
 });
