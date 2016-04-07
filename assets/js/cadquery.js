@@ -25,7 +25,7 @@ $(document).ready(function() {
     });
 
     $('#new_script').on('click', function() {
-      editor.setValue("# 'import cadquery as cq' is run for you");
+      editor.setValue("# 'import cadquery as cq' is run for you\n\n#Renders your scripted object\nbuild_object(result)");
     });
 
     $('#open_script').on('click', function() {
