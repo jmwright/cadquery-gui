@@ -2,7 +2,6 @@
 /*globals process: false, require: false, __dirname: false*/
 'use strict';
 
-//require('./vendor/js/jquery-2.2.2.min.js');
 const electron = require('electron');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
@@ -43,12 +42,11 @@ app.on('ready', function() {
     mainWindow = null;
   });
 
-  // Register a 'ctrl+x' shortcut listener.
+  // Register an 'F5' key shortcut listener.
   var ret = globalShortcut.register('F5', function() {
     console.log('F5 is pressed');
 
-    // TODO: Fix hot keys once code is properly modularized
-    //executeScript();
+    mainWindow.webContents.executeJavaScript("BUILDER.build();");
   });
 
   if (!ret) {

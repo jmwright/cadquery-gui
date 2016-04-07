@@ -28,19 +28,21 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  data-toggle="tooltip" title="File Menu"><span class="glyphicon glyphicon-file"></span> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#"><span class="glyphicon glyphicon-plus"> New</span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-open"> Open</span></a></li>
+                <li><a href="#" id="new_script"><span class="glyphicon glyphicon-plus"> New</span></a></li>
+                <li><a href="#" id="open_script"><span class="glyphicon glyphicon-open"> Open</span></a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-save"> Save</span></a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-import"> Import</span></a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-export"> Export</span></a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="#"><span class="glyphicon glyphicon-upload"> Upload</span></a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-upload"> Download</span></a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#"><span class="glyphicon glyphicon-education"> Examples</span></a></li>
               </ul>
             </li>
-            <li><a id="validate-button" href="#" data-toggle="tooltip" title="Validate Script"><span class="glyphicon glyphicon-ok"></span></a></li>
-            <li><a id="validate-button" href="#" data-toggle="tooltip" title="Debug Script"><span class="fa fa-bug fa-lg" style="margin-top:3px;"></span></a></li>
-            <li><a id="run-button" href="#" data-toggle="tooltip" title="Run Script"><span class="glyphicon glyphicon-play"></span></a></li>
+            <li><a id="validate-button" href="#" data-toggle="tooltip" title="Validate"><span class="glyphicon glyphicon-ok"></span></a></li>
+            <li><a id="validate-button" href="#" data-toggle="tooltip" title="Debug"><span class="fa fa-bug fa-lg" style="margin-top:3px;"></span></a></li>
+            <li><a id="run-button" href="#" data-toggle="tooltip" title="Build (F5)"><span class="glyphicon glyphicon-play"></span></a></li>
             <li><a href="#" data-toggle="tooltip" title="Front View (5)"><img src="assets/images/icons/front_view.svg" alt="Front View" class="pull-left icon"/></a></li>
             <li><a href="#" data-toggle="tooltip" title="Back View (5)"><img src="assets/images/icons/back_view.svg" alt="Back View" class="pull-left icon"/></a></li>
             <li><a href="#" data-toggle="tooltip" title="Top View (8)"><img src="assets/images/icons/top_view.svg" alt="Top View" class="pull-left icon"/></a></li>
@@ -94,6 +96,7 @@
 
     <!--Main JavaScript that handles the grunt work of making the UI usable-->
     <script type="text/javascript" src="assets/js/cadquery.js"></script>
+    <script type="text/javascript" src="assets/js/builder.js"></script>
 
     <div class="container">
 <div id="editor"># 'import cadquery as cq' is run for you
@@ -117,6 +120,7 @@ build_object(result)
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");
         editor.getSession().setMode("ace/mode/python");
+        editor.$blockScrolling = Infinity;
     </script>
 </body>
 </html>
