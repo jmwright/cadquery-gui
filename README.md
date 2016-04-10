@@ -7,7 +7,7 @@ An Electron-based GUI for [CadQuery](https://github.com/dcowden/cadquery/blob/ma
 
 ## Run The Latest Development Version
 
-Make sure you have npm installed.
+Make sure you have npm, the cadquery library and FreeCAD 0.15+ installed.
 
 ```
 git clone https://github.com/jmwright/cadquery-gui.git
