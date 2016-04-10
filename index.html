@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
   </head>
   <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" style="margin-bottom:0px;">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -99,8 +99,9 @@
     <script type="text/javascript" src="assets/js/cadquery.js"></script>
     <script type="text/javascript" src="assets/js/builder.js"></script>
 
-    <div class="container">
-<div id="editor"># 'import cadquery as cq' is run for you
+    <div>
+        <div id="editor-panel" class="panel panel-default">
+            <div id="editor"># 'import cadquery as cq' is run for you
 
 # These can be modified rather than changing the box's code directly
 length = 10.0
@@ -111,9 +112,9 @@ thickness = 10.0
 result = cq.Workplane("XY").box(length, height, thickness)
 
 # Render the solid using CQGI
-build_object(result)
+build_object(result)</div>
         </div>
-        <div id="modelview" style="width:100%;height:100%;margin-left:25%;">
+        <div id="modelview">
         </div>
     </div>
     <script>
