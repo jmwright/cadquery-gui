@@ -72,28 +72,28 @@ var MVIEWER = function() {
             setCameraPosition(d, d, d);
         }
         else if(viewName == 'TOP'){
-            setCameraPosition(0, 0, d);
-        }
-        else if(viewName == 'BOTTOM'){
-            setCameraPosition(0, 0, -d);
-        }
-        else if(viewName == 'LEFT'){
             setCameraPosition(0, d, 0);
         }
-        else if(viewName == 'RIGHT'){
+        else if(viewName == 'BOTTOM'){
             setCameraPosition(0, -d, 0);
         }
-        else if(viewName == 'FRONT'){
+        else if(viewName == 'LEFT'){
             setCameraPosition(d, 0, 0);
         }
-        else if(viewName == 'BACK'){
+        else if(viewName == 'RIGHT'){
             setCameraPosition(-d, 0, 0);
+        }
+        else if(viewName == 'FRONT'){
+            setCameraPosition(0, 0, d);
+        }
+        else if(viewName == 'BACK'){
+            setCameraPosition(0, 0, -d);
         }
     }
 
 // init the scene
     function init(){
-
+        // Check if the user's setup supports WebGL
         if(Detector.webgl){
             renderer = new THREE.WebGLRenderer({
                 antialias   : true, // to get smoother output
@@ -103,14 +103,13 @@ var MVIEWER = function() {
             material  = new THREE.MeshNormalMaterial({
                 wireframe:isWireFrame
             });
-            //Had to take this out of the hash with the newer version of three.js
-            //shading: THREE.SmoothShading
         }
         else{
             material = new THREE.MeshBasicMaterial({ color: 0x44ff44, wireframe: false, doubleSided: true });
             renderer  = new THREE.CanvasRenderer();
             renderer.setClearColor(settings.clearColor, 1);
         }
+
         var width = $('#modelview').width();
         renderer.setSize(width, width * 0.8);
 
@@ -149,9 +148,8 @@ var MVIEWER = function() {
     }
 
     function clearScene() {
-        for( var i = 0; i < scene.children.length; i ++ ){
+        for (var i = 0; i < scene.children.length; i++){
             var obj = scene.children[i];
-            //obj.material = [new THREE.MeshPhongMaterial({color:0xaaaaaa})];
             scene.remove(obj);
         }
     }
@@ -245,7 +243,7 @@ var MVIEWER = function() {
         // loop on request animation loop
         // - it has to be at the begining of the function
         // - see details at http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
-        requestAnimationFrame( animate );
+        requestAnimationFrame(animate);
         render(); // do the render
     }
 
@@ -258,14 +256,15 @@ var MVIEWER = function() {
 // render the scene
     function render() {
         // variable which is increase by Math.PI every seconds - usefull for animation
-        var PIseconds = Date.now() * Math.PI;
+        // var PIseconds = Date.now() * Math.PI;
+
         // update camera controls
         cameraControls.update();
 
         // animation of all objects
-        if ( autoRotate ){
-            rotateObjects(PIseconds * -0.0003);
-        }
+        // if (autoRotate){
+        //     rotateObjects(PIseconds * -0.0003);
+        // }
         //TODO: i think this is done wrong. We shouldnt be rotating the object, we should
         //example: view-source:http://mrdoob.github.com/three.js/examples/webgl_morphtargets.html
         //be moving the camera with camera.lookAt( position )
@@ -280,7 +279,7 @@ var MVIEWER = function() {
         //    light.position.set(Math.cos(angle)*3, Math.sin(angle*3)*2, Math.cos(angle*2)).normalize().multiplyScalar(safeDistance());
         //});
         // actually render the scene
-        renderer.render( scene, camera );
+        renderer.render(scene, camera);
     }
 
     //exported stuff
