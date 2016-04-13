@@ -105,10 +105,10 @@ var MVIEWER = function() {
             });
         }
         else{
-            // material = new THREE.MeshBasicMaterial({ color: 0x44ff44, wireframe: false, doubleSided: true });
-            // renderer  = new THREE.CanvasRenderer();
-            // renderer.setClearColor(settings.clearColor, 1);
-            alert('At This Time, You Must Use a WebGL Enabled Web Browser.');
+            material = new THREE.MeshBasicMaterial({ color: 0x0074D9, wireframe: false });
+            renderer  = new THREE.CanvasRenderer();
+            renderer.setClearColor(settings.clearColor, 1);
+            alert('WebGL is not enabled for your browser. Performance will be degraded.');
         }
 
         var width = $('#modelview').width();

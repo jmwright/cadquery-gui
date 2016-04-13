@@ -27,7 +27,17 @@ var BUILDER = function() {
           exec("python " + process.cwd() + "/assets/python/cq_process.py --file=" + info.path + " --outputFormat=threeJS", function(error, stdout, stderr) {
             if (error === undefined || error === null) {
                 var lines = stdout.trim().split('\n');
-                lines.splice(0, 1);
+
+                // Remove any extra output from before the JSON
+                for(var i = 0; i < lines.length; i++) {
+                  if (lines[i][0] !== '{') {
+                    delete lines[i]
+                  }
+                  else {
+                    break;
+                  }
+                }
+
                 var results = JSON.parse(lines.join('\n'));
                 // MVIEWER will display all of the objects that are in the returned JSON
                 MVIEWER.load(results);
