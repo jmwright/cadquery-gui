@@ -42,11 +42,20 @@ var MVIEWER = function() {
     };
 
     function safeDistance() {
-        return currentObjects[0].geometry.boundingSphere.radius * 2.0;
+        // Get the first object so that we can set the safe distance
+        var bBox = currentObjects[0].geometry.boundingBox;
+        if (bBox === undefined) {
+            console.log("bBox Undefined");
+            return;
+        }
+
+        // Calculate the safe distance that we should be away from the object to get a good view
+        var sphereSize = bBox.size().length() * 0.75;
+        return sphereSize / Math.sin(Math.PI / 180.0 * camera.fov * 0.5);
     }
 
     function setupCamera(geometry) {
-        if ( ! cameraSetup ){
+        if (!cameraSetup) {
             var distance = geometry.boundingSphere.radius / Math.sin((camera.fov / 2) * (Math.PI / 180));
             camera.position.z += (-distance / 1.5);
             cameraSetup = true;
@@ -67,32 +76,57 @@ var MVIEWER = function() {
 
     function setCameraView(viewName) {
         var d = safeDistance();
-        if(viewName == 'ISO') {
+        if(viewName === 'ISO') {
             d = safeDistance();
             setCameraPosition(d, d, d);
+            zoomAll();
         }
-        else if(viewName == 'TOP'){
+        else if(viewName === 'TOP') {
+            d = safeDistance();
             setCameraPosition(0, d, 0);
+            zoomAll();
         }
-        else if(viewName == 'BOTTOM'){
+        else if(viewName === 'BOTTOM') {
+            d = safeDistance();
             setCameraPosition(0, -d, 0);
+            zoomAll();
         }
-        else if(viewName == 'LEFT'){
+        else if(viewName === 'LEFT') {
+            d = safeDistance();
             setCameraPosition(d, 0, 0);
+            zoomAll();
         }
-        else if(viewName == 'RIGHT'){
+        else if(viewName === 'RIGHT') {
+            d = safeDistance();
             setCameraPosition(-d, 0, 0);
+            zoomAll();
         }
-        else if(viewName == 'FRONT'){
+        else if(viewName === 'FRONT') {
+            d = safeDistance();
             setCameraPosition(0, 0, d);
+            zoomAll();
         }
-        else if(viewName == 'BACK'){
+        else if(viewName === 'BACK') {
+            d = safeDistance();
             setCameraPosition(0, 0, -d);
+            zoomAll();
         }
     }
 
+    function zoomAll() {
+        var distToCenter = safeDistance();
+
+        // Move the camera backward
+        var target = cameraControls.target;
+        var vec = new THREE.Vector3();
+        vec.subVectors(camera.position, target);
+        vec.setLength(distToCenter);
+        camera.position.addVectors(vec, target);
+        camera.updateProjectionMatrix();
+    }
+
 // init the scene
-    function init(){
+    function init() {
         // Check if the user's setup supports WebGL
         if(Detector.webgl){
             renderer = new THREE.WebGLRenderer({
@@ -295,6 +329,7 @@ var MVIEWER = function() {
         clear : clearScene,
         load : loadGeometry,
         setView : setCameraView,
+        zoomAll : zoomAll,
         setZoom : function(factor){
             camera.position.multiplyScalar(factor);
         },

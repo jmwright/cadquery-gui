@@ -99,7 +99,7 @@ $(document).ready(function() {
     });
 
     $('#zoom_to_fit').on('click', function() {
-      notImplementedYet();
+      MVIEWER.zoomAll();
     });
 
     $('#settings_button').on('click', function() {
