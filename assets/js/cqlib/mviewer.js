@@ -29,6 +29,8 @@ var MVIEWER = function() {
     var scene, renderer;
     var camera, cameraControls;
     var currentObjects = []; // Holds all of the objects that we are rendering
+    var currentEdges = []; // Holds all of the edges for the objects that were are rendering
+    var currentAxes = []; // Holds the axis lines that are based on the size(s) of the included objects
     var cameraSetup = false;
     var autoRotate = false;
     var isWireFrame = false;
@@ -134,8 +136,9 @@ var MVIEWER = function() {
                 preserveDrawingBuffer : true  // to allow screenshot
             });
             renderer.setClearColor(settings.clearColor, 1);
-            material  = new THREE.MeshNormalMaterial({
-                wireframe:isWireFrame
+            material  = new THREE.MeshPhongMaterial({
+                wireframe:isWireFrame,
+                color: 0x808080
             });
         }
         else{
@@ -166,6 +169,8 @@ var MVIEWER = function() {
         // create a camera contol
         cameraControls  = new THREE.TrackballControls( camera, document.getElementById(settings.containerId) );
 
+        scene.add (new THREE.AmbientLight(0xffffff));
+
         //uncomment to start with the camera centered at object center, comment to have camera centered
         //at origin instead
         //cameraControls.target = new THREE.Vector3(50,20,50);
@@ -183,8 +188,8 @@ var MVIEWER = function() {
     }
 
     function clearScene() {
-        for (var i = 0; i < scene.children.length; i++){
-            var obj = scene.children[i];
+        for (var i = 0; i < scene.children.length; i++){            
+            var obj = scene.children[i];            
             scene.remove(obj);
         }
     }
@@ -195,29 +200,38 @@ var MVIEWER = function() {
         }
 
         //Create axis (point1, point2, colour)
-        function createAxis(p1, p2, color) {
+        function createAxis(p1, p2, color, index) {
             var line, lineGeometry = new THREE.Geometry(),
                 lineMat = new THREE.LineBasicMaterial({color: color});
             lineGeometry.vertices.push(p1, p2);
-            line = new THREE.Line(lineGeometry, lineMat);
+            line = new THREE.Line(lineGeometry, lineMat); 
+            currentAxes[index] = line;           
             scene.add(line);
 
 
         }
-        createAxis(v(-axisLength, 0, 0), v(axisLength, 0, 0), 0xFF0000);
-        createAxis(v(0, -axisLength, 0), v(0, axisLength, 0), 0x00FF00);
-        createAxis(v(0, 0, -axisLength), v(0, 0, axisLength), 0x0000FF);
+        createAxis(v(-axisLength, 0, 0), v(axisLength, 0, 0), 0xFF0000, 0);
+        createAxis(v(0, -axisLength, 0), v(0, axisLength, 0), 0x00FF00, 1);
+        createAxis(v(0, 0, -axisLength), v(0, 0, axisLength), 0x0000FF, 2);
     }
 
 
 //loads geometry.
     function loadGeometry(data) {
-        clearScene();
+        console.log(scene.children.length);
+        for(var i = 0; i < scene.children.length; i++) {
+            console.log(scene.children[i]);
+        }
+        // clearScene();
 
         // Make sure that we remove all objects from the scene
         if (currentObjects.length > 0) {
             for (var i = 0; i < currentObjects.length; i++) {
                 scene.remove(currentObjects[i]);
+                scene.remove(currentEdges[i]);
+            }
+            for(var i = 0; i < currentAxes.length; i++) {
+                scene.remove(currentAxes[i]);
             }
         }
 
@@ -228,12 +242,16 @@ var MVIEWER = function() {
             var model = loader.parse(data.allResults[j]);
 
             var mesh  = new THREE.Mesh(model.geometry, material);
+            var edges = new THREE.EdgesHelper(mesh, 0x000000);
 
             setupCamera(model.geometry);
 
             scene.add(mesh);
+            scene.add(edges);            
 
+            // We need to track all objects and lines added to the scene so that we can remove them later
             currentObjects[j] = mesh;
+            currentEdges[j] = edges;
 
             // We only want to do these things for the first object
             if(j === 0) {
@@ -243,9 +261,7 @@ var MVIEWER = function() {
                 var centerX = 0.5 * (bb.max.x - bb.min.x);
                 var centerY = 0.5 * (bb.max.y - bb.min.y);
                 var centerZ = 0.5 * (bb.max.z - bb.min.z);
-                centroid = new THREE.Vector3(centerX, centerY, centerZ);
-                //console.debug("Centroid is:")
-                //console.debug(centroid)
+                centroid = new THREE.Vector3(centerX, centerY, centerZ);                
 
                 //axes.. based on object size
                 debugAxis(mesh.geometry.boundingSphere.radius * 2.0);
@@ -256,19 +272,17 @@ var MVIEWER = function() {
         //camera.lookAt( scene.position );
         //camera.target.position.copy( new THREE.Vector3(50,0,0));
 
-        var d = safeDistance();
-        var light = new THREE.SpotLight(0xaaaaaa);
-        light.position.set(d, d, d);
-        scene.add(light);
+        // var d = safeDistance();
+        // var light = new THREE.SpotLight(0xffffff);
+        // light.position.set(d + 10, d + 10, d + 10);
+        // scene.add(light);
 
-        light = new THREE.SpotLight(0xaaaaaa);
-        light.position.set(-d, d, d);
-        scene.add(light);
+        // light = new THREE.SpotLight(0x002288);
+        // light.position.set(-d, d, d);
+        // scene.add(light);        
 
-        scene.add (new THREE.AmbientLight(0xaaaaaa));
-
-        if (firstTimeLoad){
-            setCameraView(settings.initialView);
+        if (firstTimeLoad) {
+            setCameraView(settings.initialView);            
             firstTimeLoad = false;
         }
     }
