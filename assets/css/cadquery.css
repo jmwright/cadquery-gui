@@ -17,6 +17,19 @@ body {
     padding-left:25%;
 }
 
+#indicator  {
+    width: 100px;
+    height: 100px;
+    background-color: #fff; /* or transparent; will show through only if renderer alpha: true */
+    border: 1px solid black; /* or none; */
+    margin: 20px;
+    padding: 0px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    z-index: 100;
+}
+
 #editor-panel {
     float:left;
     width:33%;

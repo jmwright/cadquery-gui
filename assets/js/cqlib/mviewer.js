@@ -26,8 +26,10 @@
 /*globals THREE: false, Detector: false, $: false*/
 'use strict';
 var MVIEWER = function() {
-    var scene, renderer;
-    var camera, cameraControls;
+    var scene, renderer, originScene, originRenderer;
+    var camera, originCamera, cameraControls;
+    var originAxes;
+    var originContainer;
     var currentObjects = []; // Holds all of the objects that we are rendering
     var currentEdges = []; // Holds all of the edges for the objects that were are rendering
     var currentAxes = []; // Holds the axis lines that are based on the size(s) of the included objects
@@ -37,6 +39,7 @@ var MVIEWER = function() {
     var firstTimeLoad = true;
     var material = "";
     var centroid;
+    var CAM_DISTANCE = 300;
     var settings = {
         initialView: 'ISO',
         clearColor: 0x696969,
@@ -171,6 +174,40 @@ var MVIEWER = function() {
 
         scene.add (new THREE.AmbientLight(0xffffff));
 
+        // Set up the origin indicator
+        originContainer = document.getElementById('indicator');
+        originRenderer = new THREE.WebGLRenderer({
+                antialias   : true, // to get smoother output
+                preserveDrawingBuffer : true  // to allow screenshot
+            });
+        originRenderer.setClearColor(0xf0f0f0, 1);
+        originRenderer.setSize(100.0, 100.0);
+        originContainer.appendChild(originRenderer.domElement);
+        originScene = new THREE.Scene();
+        originCamera = new THREE.PerspectiveCamera(35, 100.0 / 100.0, 1, 1000);
+        originCamera.up = camera.up;
+
+        // Set up the axes for the origin indicator
+        // originAxes = new THREE.AxisHelper(100);
+        // originAxes = new Origin();
+        var dirX = new THREE.Vector3(100, 0, 0);
+        var dirY = new THREE.Vector3(0, 100, 0);
+        var dirZ = new THREE.Vector3(0, 0, 100);
+        var origin = new THREE.Vector3(0, 0, 0);
+        var length = 75;
+        var xAxisColor = 0xff0000;
+        var yAxisColor = 0x00ff00;
+        var zAxisColor = 0x0000ff;
+
+        var arrowHelperX = new THREE.ArrowHelper(dirX, origin, length, xAxisColor, 20, 15);
+        var arrowHelperY = new THREE.ArrowHelper(dirY, origin, length, yAxisColor, 20, 15);
+        var arrowHelperZ = new THREE.ArrowHelper(dirZ, origin, length, zAxisColor, 20, 15);
+        originScene.add(arrowHelperX);
+        originScene.add(arrowHelperY);
+        originScene.add(arrowHelperZ);
+
+        //controls.addEventListener( 'update', render );
+
         //uncomment to start with the camera centered at object center, comment to have camera centered
         //at origin instead
         //cameraControls.target = new THREE.Vector3(50,20,50);
@@ -217,11 +254,7 @@ var MVIEWER = function() {
 
 
 //loads geometry.
-    function loadGeometry(data) {
-        console.log(scene.children.length);
-        for(var i = 0; i < scene.children.length; i++) {
-            console.log(scene.children[i]);
-        }
+    function loadGeometry(data) {       
         // clearScene();
 
         // Make sure that we remove all objects from the scene
@@ -285,6 +318,8 @@ var MVIEWER = function() {
             setCameraView(settings.initialView);            
             firstTimeLoad = false;
         }
+
+        //render();
     }
 
 // animation loop
@@ -293,6 +328,13 @@ var MVIEWER = function() {
         // - it has to be at the begining of the function
         // - see details at http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
         requestAnimationFrame(animate);
+
+        originCamera.position.copy(camera.position);
+        originCamera.position.sub(cameraControls.target);
+        originCamera.position.setLength(CAM_DISTANCE);
+
+        originCamera.lookAt(originScene.position);
+
         render(); // do the render
     }
 
@@ -329,6 +371,7 @@ var MVIEWER = function() {
         //});
         // actually render the scene
         renderer.render(scene, camera);
+        originRenderer.render(originScene, originCamera);
     }
 
     //exported stuff
