@@ -82,36 +82,43 @@ var MVIEWER = function() {
     function setCameraView(viewName) {
         var d = safeDistance();
         if(viewName === 'ISO') {
+            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(d, d, d);
             zoomAll();
         }
         else if(viewName === 'TOP') {
+            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(0, d, 0);
             zoomAll();
         }
         else if(viewName === 'BOTTOM') {
+            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(0, -d, 0);
             zoomAll();
         }
         else if(viewName === 'LEFT') {
+            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(d, 0, 0);
             zoomAll();
         }
         else if(viewName === 'RIGHT') {
+            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(-d, 0, 0);
             zoomAll();
         }
         else if(viewName === 'FRONT') {
+            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(0, 0, d);
             zoomAll();
         }
         else if(viewName === 'BACK') {
+            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(0, 0, -d);
             zoomAll();
