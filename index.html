@@ -101,9 +101,8 @@
     <script type="text/javascript" src="assets/js/cadquery.js"></script>
     <script type="text/javascript" src="assets/js/builder.js"></script>
 
-    <div>
-        <div id="editor-panel" class="panel panel-default">
-            <div id="editor"># 'import cadquery as cq' is run for you
+    <div id="editor-panel" class="panel panel-default">
+        <div id="editor"># 'import cadquery as cq' is run for you
 
 # These can be modified rather than changing the box's code directly
 length = 10.0
@@ -115,11 +114,10 @@ result = cq.Workplane("XY").box(length, height, thickness)
 
 # Render the solid using CQGI
 build_object(result)</div>
-        </div>
-        <div id="modelview">
-          <div id="indicator">
-          </div>
-        </div>
+    </div>
+    <div id="modelview">
+      <div id="indicator">
+      </div>
     </div>
     <script>
         'use strict';

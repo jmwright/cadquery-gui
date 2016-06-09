@@ -1,26 +1,29 @@
-body {
+html, body {
     /* set margin to 0 and overflow to hidden, to
      use the complete page */
     margin: 0;
     overflow: hidden;
     background-color: #696969;
     font-size: 24px;
+    height: 100%;
+    min-height: 100%;
+    width:100%;
 }
 
 #modelview {
-    position:absolute;
-    top:0px;
-    left:0px;
-    width:100%;
+    width:68%;
     height:100%;
-    z-index:-1;
-    padding-left:25%;
+    z-index:50;
+    float:left;
+    margin:0px;
+    padding:0px;
+    /*border: 5px solid white;*/
 }
 
 #indicator  {
     width: 100px;
     height: 100px;
-    background-color: #fff; /* or transparent; will show through only if renderer alpha: true */
+    background-color: #808080; /* or transparent; will show through only if renderer alpha: true */
     border: 1px solid black; /* or none; */
     margin: 20px;
     padding: 0px;
@@ -32,25 +35,20 @@ body {
 
 #editor-panel {
     float:left;
-    width:33%;
-    height:100%;
+    width:32%;
+    height: 100%;
+    min-height: 100%;
     margin:0px;
     padding:4px;
     background-color:#f8f8f8;
 }
 
 #editor {
-    /*position:absolute;
-    top:60px;
-    left:0px;
-    z-index:1;
-    width:33%;
-    height:75%;*/
     position:relative;
     left:0px;
-    height:600px;
+    height: 100%;
+    min-height: 100%;
     width:100%;
-    float:left;
 }
 
 .icon {

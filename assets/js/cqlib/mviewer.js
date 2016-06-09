@@ -82,43 +82,36 @@ var MVIEWER = function() {
     function setCameraView(viewName) {
         var d = safeDistance();
         if(viewName === 'ISO') {
-            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(d, d, d);
             zoomAll();
         }
         else if(viewName === 'TOP') {
-            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(0, d, 0);
             zoomAll();
         }
         else if(viewName === 'BOTTOM') {
-            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(0, -d, 0);
             zoomAll();
         }
         else if(viewName === 'LEFT') {
-            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(d, 0, 0);
             zoomAll();
         }
         else if(viewName === 'RIGHT') {
-            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(-d, 0, 0);
             zoomAll();
         }
         else if(viewName === 'FRONT') {
-            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(0, 0, d);
             zoomAll();
         }
         else if(viewName === 'BACK') {
-            cameraControls.reset();
             d = safeDistance();
             setCameraPosition(0, 0, -d);
             zoomAll();
@@ -195,8 +188,6 @@ var MVIEWER = function() {
         originCamera.up = camera.up;
 
         // Set up the axes for the origin indicator
-        // originAxes = new THREE.AxisHelper(100);
-        // originAxes = new Origin();
         var dirX = new THREE.Vector3(100, 0, 0);
         var dirY = new THREE.Vector3(0, 100, 0);
         var dirZ = new THREE.Vector3(0, 0, 100);
@@ -212,6 +203,10 @@ var MVIEWER = function() {
         originScene.add(arrowHelperX);
         originScene.add(arrowHelperY);
         originScene.add(arrowHelperZ);
+
+        // Base grid helps us orient ourselves
+        var baseGrid = new THREE.GridHelper( 30, 1 );
+        scene.add(baseGrid)
 
         //controls.addEventListener( 'update', render );
 
@@ -232,8 +227,8 @@ var MVIEWER = function() {
     }
 
     function clearScene() {
-        for (var i = 0; i < scene.children.length; i++){            
-            var obj = scene.children[i];            
+        for (var i = 0; i < scene.children.length; i++){
+            var obj = scene.children[i];
             scene.remove(obj);
         }
     }
@@ -248,8 +243,8 @@ var MVIEWER = function() {
             var line, lineGeometry = new THREE.Geometry(),
                 lineMat = new THREE.LineBasicMaterial({color: color});
             lineGeometry.vertices.push(p1, p2);
-            line = new THREE.Line(lineGeometry, lineMat); 
-            currentAxes[index] = line;           
+            line = new THREE.Line(lineGeometry, lineMat);
+            currentAxes[index] = line;
             scene.add(line);
 
 
@@ -261,7 +256,7 @@ var MVIEWER = function() {
 
 
 //loads geometry.
-    function loadGeometry(data) {       
+    function loadGeometry(data) {
         // clearScene();
 
         // Make sure that we remove all objects from the scene
@@ -287,7 +282,7 @@ var MVIEWER = function() {
             setupCamera(model.geometry);
 
             scene.add(mesh);
-            scene.add(edges);            
+            scene.add(edges);
 
             // We need to track all objects and lines added to the scene so that we can remove them later
             currentObjects[j] = mesh;
@@ -301,7 +296,7 @@ var MVIEWER = function() {
                 var centerX = 0.5 * (bb.max.x - bb.min.x);
                 var centerY = 0.5 * (bb.max.y - bb.min.y);
                 var centerZ = 0.5 * (bb.max.z - bb.min.z);
-                centroid = new THREE.Vector3(centerX, centerY, centerZ);                
+                centroid = new THREE.Vector3(centerX, centerY, centerZ);
 
                 //axes.. based on object size
                 debugAxis(mesh.geometry.boundingSphere.radius * 2.0);
@@ -319,10 +314,10 @@ var MVIEWER = function() {
 
         // light = new THREE.SpotLight(0x002288);
         // light.position.set(-d, d, d);
-        // scene.add(light);        
+        // scene.add(light);
 
         if (firstTimeLoad) {
-            setCameraView(settings.initialView);            
+            setCameraView(settings.initialView);
             firstTimeLoad = false;
         }
 
