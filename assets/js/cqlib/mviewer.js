@@ -130,7 +130,7 @@ var MVIEWER = function() {
         camera.updateProjectionMatrix();
     }
 
-// init the scene
+    // init the scene
     function init() {
         // Check if the user's setup supports WebGL
         if(Detector.webgl){
