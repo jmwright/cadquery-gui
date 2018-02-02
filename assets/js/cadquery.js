@@ -115,7 +115,7 @@ $(document).ready(function() {
     });
 
     //set up model viewer
-    MVIEWER.init({
+    VIEWER.init({
       initialView: 'ISO',
       width: 800,
       height: 600,

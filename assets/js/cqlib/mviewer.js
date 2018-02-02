@@ -396,5 +396,4 @@ var MVIEWER = function() {
             return renderer.domElement.toDataURL("image/png");
         }
     };
-
 }();
