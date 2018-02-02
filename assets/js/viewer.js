@@ -12,6 +12,7 @@ var VIEWER = function() {
       renderer = new THREE.WebGLRenderer();
       var width = $('#modelview').width();
       renderer.setSize(width, width * 0.8);
+      renderer.setClearColor(settings.clearColor, 1);
 
       $(window).resize(function() {
           var width = $('#modelview').width();
