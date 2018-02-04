@@ -71,35 +71,35 @@ $(document).ready(function() {
     });
 
     $('#front_view').on('click', function() {
-      MVIEWER.setView('FRONT');
+      VIEWER.setView('FRONT');
     });
 
     $('#back_view').on('click', function() {
-      MVIEWER.setView('BACK');
+      VIEWER.setView('BACK');
     });
 
     $('#top_view').on('click', function() {
-      MVIEWER.setView('TOP');
+      VIEWER.setView('TOP');
     });
 
     $('#bottom_view').on('click', function() {
-      MVIEWER.setView('BOTTOM');
+      VIEWER.setView('BOTTOM');
     });
 
     $('#right_view').on('click', function() {
-      MVIEWER.setView('RIGHT');
+      VIEWER.setView('RIGHT');
     });
 
     $('#left_view').on('click', function() {
-      MVIEWER.setView('LEFT');
+      VIEWER.setView('LEFT');
     });
 
     $('#iso_view').on('click', function() {
-      MVIEWER.setView('ISO');
+      VIEWER.setView('ISO');
     });
 
     $('#zoom_to_fit').on('click', function() {
-      MVIEWER.zoomAll();
+      VIEWER.zoomAll();
     });
 
     $('#settings_button').on('click', function() {

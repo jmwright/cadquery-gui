@@ -1,12 +1,22 @@
 
 var VIEWER = function() {
   var mesh, renderer, scene, camera, controls;
+  var currentObjects = []; // Holds all of the objects that we are rendering
+  var currentEdges = []; // Holds all of the edges for the objects that were are rendering
   var settings = {
       initialView: 'ISO',
       clearColor: 0x696969,
       containerId: ""
   };
+  // material
+  var material = new THREE.MeshPhongMaterial( {
+      color: 0x00ffff,
+      shading: THREE.FlatShading,
+      transparent: true,
+      opacity: 0.7,
+  } );
 
+  // Sets the main 3D scene and the origin scene up
   function init() {
       // renderer
       renderer = new THREE.WebGLRenderer();
@@ -39,9 +49,6 @@ var VIEWER = function() {
       var light = new THREE.DirectionalLight( 0xffffff, 1 );
       light.position.set( 20, 20, 0 );
       scene.add( light );
-
-      // axes
-      // scene.add( new THREE.AxisHelper( 20 ) );
 
       // Set up the origin indicator
       originContainer = document.getElementById('indicator');
@@ -78,24 +85,51 @@ var VIEWER = function() {
       var baseGrid = new THREE.GridHelper( 30, 1 );
       scene.add(baseGrid)
 
-      // geometry
-      var geometry = new THREE.SphereGeometry( 5, 12, 8 );
+      render();
+  }
 
-      // material
-      var material = new THREE.MeshPhongMaterial( {
-          color: 0x00ffff,
-          shading: THREE.FlatShading,
-          transparent: true,
-          opacity: 0.7,
-      } );
+  // Loads the JSON geometry data into the main scene
+  function loadGeometry(data) {
+      // Make sure that we remove all objects from the scene
+      if (currentObjects.length > 0) {
+          for (var i = 0; i < currentObjects.length; i++) {
+              scene.remove(currentObjects[i]);
+              scene.remove(currentEdges[i]);
+          }
+      }
 
-      // mesh
-      mesh = new THREE.Mesh( geometry, material );
-      scene.add( mesh );
+      // Step through all the results and render them
+      for(var j = 0; j < data.allResults.length; j++){
+          //load new model
+          var loader = new THREE.JSONLoader();
+          var model = loader.parse(data.allResults[j]);
+
+          var mesh  = new THREE.Mesh(model.geometry, material);
+          var edges = new THREE.EdgesHelper(mesh, 0x000000);
+
+          scene.add(mesh);
+          scene.add(edges);
+
+          // We need to track all objects and lines added to the scene so that we can remove them later
+          currentObjects[j] = mesh;
+          currentEdges[j] = edges;
+
+          // We only want to do these things for the first object
+          if(j === 0) {
+              //compute center
+              model.geometry.computeBoundingBox();
+              var bb = model.geometry.boundingBox;
+              var centerX = 0.5 * (bb.max.x - bb.min.x);
+              var centerY = 0.5 * (bb.max.y - bb.min.y);
+              var centerZ = 0.5 * (bb.max.z - bb.min.z);
+              centroid = new THREE.Vector3(centerX, centerY, centerZ);
+          }
+      }
 
       render();
   }
 
+  // Shows what has been loaded into the scene
   function render() {
       // Main scene
       renderer.render( scene, camera );
@@ -107,20 +141,99 @@ var VIEWER = function() {
       originRenderer.render(originScene, originCamera);
   }
 
-  //exported stuff
+  // Makes sure we are not too close to the object when setting a view camera position
+  function safeDistance() {
+      // Get the first object so that we can set the safe distance
+      var bBox = currentObjects[0].geometry.boundingBox;
+      if (bBox === undefined) {
+          console.log("bBox Undefined");
+          return;
+      }
+
+      // Calculate the safe distance that we should be away from the object to get a good view
+      var sphereSize = bBox.size().length() * 0.75;
+      return sphereSize / Math.sin(Math.PI / 180.0 * camera.fov * 0.5);
+  }
+
+  // Allows us to reset the camera position to any point in space
+  function setCameraPosition(x, y, z) {
+      rotateObjects(0);
+      camera.position.x = x;
+      camera.position.y = y;
+      camera.position.z = z;
+  }
+
+  // Allows us to reset the rotation angle of the objects in the scene
+  function rotateObjects(angle) {
+      for(var i = 0; i < scene.children.length; i ++){
+          scene.children[ i ].rotation.y = angle;
+      }
+  }
+
+  // Allows the GUI to pass named views to get the desired camera position
+  function setCameraView(viewName) {
+      var d = safeDistance();
+      if(viewName === 'ISO') {
+          d = safeDistance();
+          setCameraPosition(d, d, d);
+          zoomAll();
+      }
+      else if(viewName === 'TOP') {
+          d = safeDistance();
+          setCameraPosition(0, d, 0);
+          zoomAll();
+      }
+      else if(viewName === 'BOTTOM') {
+          d = safeDistance();
+          setCameraPosition(0, -d, 0);
+          zoomAll();
+      }
+      else if(viewName === 'LEFT') {
+          d = safeDistance();
+          setCameraPosition(d, 0, 0);
+          zoomAll();
+      }
+      else if(viewName === 'RIGHT') {
+          d = safeDistance();
+          setCameraPosition(-d, 0, 0);
+          zoomAll();
+      }
+      else if(viewName === 'FRONT') {
+          d = safeDistance();
+          setCameraPosition(0, 0, d);
+          zoomAll();
+      }
+      else if(viewName === 'BACK') {
+          d = safeDistance();
+          setCameraPosition(0, 0, -d);
+          zoomAll();
+      }
+  }
+
+  // Fits everything in the scene properly within the viewport
+  function zoomAll() {
+      var distToCenter = safeDistance();
+
+      // Move the camera backward
+      var target = controls.target;
+      var vec = new THREE.Vector3();
+      vec.subVectors(camera.position, target);
+      vec.setLength(distToCenter);
+      camera.position.addVectors(vec, target);
+      camera.updateProjectionMatrix();
+
+      render();
+  }
+
+  //exported functions
   return {
       init: function(opts) {
           $.extend(settings, opts);
           init();
-          // if(!init())  animate();
-      }//,
-      // toggleRotate : function(){
-      //     autoRotate = !autoRotate;
-      // },
-      // clear : clearScene,
-      // load : loadGeometry,
-      // setView : setCameraView,
-      // zoomAll : zoomAll,
+      },
+      loadGeometry : loadGeometry,
+      setView : setCameraView,
+      zoomAll : zoomAll
       // setZoom : function(factor){
       //     camera.position.multiplyScalar(factor);
       // },

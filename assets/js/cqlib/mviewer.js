@@ -232,6 +232,7 @@ var MVIEWER = function() {
             scene.remove(obj);
         }
     }
+    
     function debugAxis(axisLength) {
         //Shorten the vertex function
         function v(x, y, z){
