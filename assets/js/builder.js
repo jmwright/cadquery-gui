@@ -8,6 +8,8 @@ var exec = require('child_process').exec;
 
 var BUILDER = function() {
   function build() {
+    var results = "{}";
+
     // Automatically track and cleanup files at exit
     temp.track();
 
@@ -38,9 +40,10 @@ var BUILDER = function() {
                   }
                 }
 
-                var results = JSON.parse(lines.join('\n'));
-                // MVIEWER will display all of the objects that are in the returned JSON
-                MVIEWER.load(results);
+                results = JSON.parse(lines.join('\n'));
+
+                // VIEWER will display all of the objects that are in the returned JSON
+                VIEWER.loadGeometry(results);
             }
             else {
                 console.log(`exec error: ${error}; stderr: ${stderr}`);

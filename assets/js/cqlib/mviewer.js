@@ -232,6 +232,7 @@ var MVIEWER = function() {
             scene.remove(obj);
         }
     }
+    
     function debugAxis(axisLength) {
         //Shorten the vertex function
         function v(x, y, z){
@@ -396,5 +397,4 @@ var MVIEWER = function() {
             return renderer.domElement.toDataURL("image/png");
         }
     };
-
 }();

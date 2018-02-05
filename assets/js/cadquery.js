@@ -3,8 +3,8 @@
 'use strict';
 
 var shell = require('electron').shell;
-var remote = require('remote');
-var dialog = remote.require('dialog');
+var remote = require('electron').remote;
+var dialog = require('electron').remote.dialog;
 var fs = require('fs');
 
 var gFileName = null;
@@ -71,35 +71,35 @@ $(document).ready(function() {
     });
 
     $('#front_view').on('click', function() {
-      MVIEWER.setView('FRONT');
+      VIEWER.setView('FRONT');
     });
 
     $('#back_view').on('click', function() {
-      MVIEWER.setView('BACK');
+      VIEWER.setView('BACK');
     });
 
     $('#top_view').on('click', function() {
-      MVIEWER.setView('TOP');
+      VIEWER.setView('TOP');
     });
 
     $('#bottom_view').on('click', function() {
-      MVIEWER.setView('BOTTOM');
+      VIEWER.setView('BOTTOM');
     });
 
     $('#right_view').on('click', function() {
-      MVIEWER.setView('RIGHT');
+      VIEWER.setView('RIGHT');
     });
 
     $('#left_view').on('click', function() {
-      MVIEWER.setView('LEFT');
+      VIEWER.setView('LEFT');
     });
 
     $('#iso_view').on('click', function() {
-      MVIEWER.setView('ISO');
+      VIEWER.setView('ISO');
     });
 
     $('#zoom_to_fit').on('click', function() {
-      MVIEWER.zoomAll();
+      VIEWER.zoomAll();
     });
 
     $('#settings_button').on('click', function() {
@@ -115,7 +115,7 @@ $(document).ready(function() {
     });
 
     //set up model viewer
-    MVIEWER.init({
+    VIEWER.init({
       initialView: 'ISO',
       width: 800,
       height: 600,
