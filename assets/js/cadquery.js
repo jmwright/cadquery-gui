@@ -3,8 +3,8 @@
 'use strict';
 
 var shell = require('electron').shell;
-var remote = require('remote');
-var dialog = remote.require('dialog');
+var remote = require('electron').remote;
+var dialog = require('electron').remote.dialog;
 var fs = require('fs');
 
 var gFileName = null;

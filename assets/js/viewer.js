@@ -132,7 +132,7 @@ var VIEWER = function() {
   // Shows what has been loaded into the scene
   function render() {
       // Main scene
-      renderer.render( scene, camera );
+      renderer.render(scene, camera);
 
       // Origin scene
       originCamera.position.copy(camera.position);

@@ -6,6 +6,7 @@ const electron = require('electron');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
 const localShortcut = require('electron-localshortcut'); // Allows us to add hotkeys
+const template = require('./menu_template.js');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -27,6 +28,10 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow.maximize();
+
+  // const menu = Menu.buildFromTemplate(template);
+  // Menu.setApplicationMenu(menu);
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
