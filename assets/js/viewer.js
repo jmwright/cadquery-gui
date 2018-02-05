@@ -3,6 +3,7 @@ var VIEWER = function() {
   var mesh, renderer, scene, camera, controls;
   var currentObjects = []; // Holds all of the objects that we are rendering
   var currentEdges = []; // Holds all of the edges for the objects that were are rendering
+  var centroid;
   var settings = {
       initialView: 'ISO',
       clearColor: 0x696969,
@@ -35,18 +36,18 @@ var VIEWER = function() {
       scene = new THREE.Scene();
 
       // camera
-      camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+      camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
       camera.position.set( 20, 20, 20 );
 
       // controls
-      controls = new THREE.OrbitControls( camera );
-      controls.addEventListener( 'change', render ); // use if there is no animation loop
+      controls = new THREE.OrbitControls(camera);
+      controls.addEventListener('change', render); // use if there is no animation loop
 
       // ambient
-      scene.add( new THREE.AmbientLight( 0x222222 ) );
+      scene.add(new THREE.AmbientLight( 0x222222 ));
 
       // light
-      var light = new THREE.DirectionalLight( 0xffffff, 1 );
+      var light = new THREE.DirectionalLight(0xffffff, 1);
       light.position.set( 20, 20, 0 );
       scene.add( light );
 
@@ -82,7 +83,7 @@ var VIEWER = function() {
       originScene.add(arrowHelperZ);
 
       // Base grid helps us orient ourselves
-      var baseGrid = new THREE.GridHelper( 30, 1 );
+      var baseGrid = new THREE.GridHelper(30, 1);
       scene.add(baseGrid)
 
       render();
@@ -173,41 +174,39 @@ var VIEWER = function() {
   // Allows the GUI to pass named views to get the desired camera position
   function setCameraView(viewName) {
       var d = safeDistance();
+      controls.reset();
+
       if(viewName === 'ISO') {
-          d = safeDistance();
+          // Move the camera to show us an isometric view
           setCameraPosition(d, d, d);
-          zoomAll();
       }
       else if(viewName === 'TOP') {
-          d = safeDistance();
+          // Move the camera to show us a top view
           setCameraPosition(0, d, 0);
-          zoomAll();
       }
       else if(viewName === 'BOTTOM') {
-          d = safeDistance();
+          // Move the camera to show us a bottom view
           setCameraPosition(0, -d, 0);
-          zoomAll();
       }
       else if(viewName === 'LEFT') {
-          d = safeDistance();
+          // Move the camera to show us a left side view
           setCameraPosition(d, 0, 0);
-          zoomAll();
       }
       else if(viewName === 'RIGHT') {
-          d = safeDistance();
+          // Move the camera to show us a right side view
           setCameraPosition(-d, 0, 0);
-          zoomAll();
       }
       else if(viewName === 'FRONT') {
-          d = safeDistance();
+          // Move the camera to show us a front view
           setCameraPosition(0, 0, d);
-          zoomAll();
       }
       else if(viewName === 'BACK') {
-          d = safeDistance();
+          // Move the camera to show us a back view
           setCameraPosition(0, 0, -d);
-          zoomAll();
       }
+
+      // Make sure everything fits in the view
+      zoomAll();
   }
 
   // Fits everything in the scene properly within the viewport
@@ -222,7 +221,7 @@ var VIEWER = function() {
       camera.position.addVectors(vec, target);
       camera.updateProjectionMatrix();
 
-      render();
+      controls.update();
   }
 
   //exported functions

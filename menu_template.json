@@ -1,0 +1,11 @@
+[
+  {
+    "label": "File",
+    "submenu": [
+      {"label": "New"},
+      {"label": "Open"},
+      {"type": "separator"},
+      {"label": "Quit"}
+    ]
+  }
+]

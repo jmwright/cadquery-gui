@@ -2,11 +2,12 @@
 /*globals process: false, require: false, __dirname: false*/
 'use strict';
 
-const electron = require('electron');
-const app = electron.app;  // Module to control application life.
-const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
+const {app, Menu} = require('electron');
+// const app = electron.app;  // Module to control application life.
+const BrowserWindow = require('electron').BrowserWindow;  // Module to create native browser window.
 const localShortcut = require('electron-localshortcut'); // Allows us to add hotkeys
-const template = require('./menu_template.js');
+// const fs = require('fs');
+// var template = JSON.parse(fs.readFileSync("./menu_template.json"));
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -30,7 +31,7 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({width: 800, height: 600});
   mainWindow.maximize();
 
-  // const menu = Menu.buildFromTemplate(template);
+  // const menu = Menu.buildFromTemplate(template.template);
   // Menu.setApplicationMenu(menu);
 
   // and load the index.html of the app.
