@@ -4,6 +4,7 @@ var VIEWER = function() {
   var currentObjects = []; // Holds all of the objects that we are rendering
   var currentEdges = []; // Holds all of the edges for the objects that were are rendering
   var centroid;
+  var navBarHeight = 50; //px
   var settings = {
       initialView: 'ISO',
       clearColor: 0x696969,
@@ -25,9 +26,9 @@ var VIEWER = function() {
       renderer.setSize(width, width * 0.8);
       renderer.setClearColor(settings.clearColor, 1);
 
+      // Keeps our 3D view properly sized
       $(window).resize(function() {
-          var width = $('#modelview').width();
-          renderer.setSize(width, width * 0.8);
+          renderer.setSize(window.innerWidth, window.innerHeight - navBarHeight);
       });
 
       document.getElementById(settings.containerId).appendChild(renderer.domElement);
@@ -36,8 +37,8 @@ var VIEWER = function() {
       scene = new THREE.Scene();
 
       // camera
-      camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
-      camera.position.set( 20, 20, 20 );
+      camera = new THREE.PerspectiveCamera(40, window.innerWidth / (window.innerHeight - navBarHeight), 1, 10000);
+      camera.position.set(60, 60, 60);
 
       // controls
       controls = new THREE.OrbitControls(camera);
@@ -84,7 +85,7 @@ var VIEWER = function() {
 
       // Base grid helps us orient ourselves
       var baseGrid = new THREE.GridHelper(30, 1);
-      scene.add(baseGrid)
+      scene.add(baseGrid);
 
       render();
   }
@@ -128,6 +129,7 @@ var VIEWER = function() {
       }
 
       render();
+      zoomAll();
   }
 
   // Shows what has been loaded into the scene
