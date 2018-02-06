@@ -19,7 +19,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#" style="padding:0px;"><img src="assets/images/cadquery_logo_dark.svg" style="height:100%;margin-top:3px;margin-left:3px;"/></a>
+          <a class="navbar-brand" href="#" style="padding:0px;"><img src="assets/images/cadquery-gui_logo_dark.svg" style="height:100%;margin-top:3px;margin-left:3px;"/></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -32,18 +32,18 @@
                 <li><a href="#" id="open_script"><span class="glyphicon glyphicon-open"></span> Open (Ctrl+O)</a></li>
                 <li><a href="#" id="save_script"><span class="glyphicon glyphicon-save"></span> Save (Ctrl+S)</a></li>
                 <li><a href="#" id="save_script_as"><span class="glyphicon glyphicon-save"></span> Save As</a></li>
-                <li><a href="#" id="import_object"><span class="glyphicon glyphicon-import"></span> Import</a></li>
+                <li><a href="#" id="save_script_as"><span class="glyphicon glyphicon-save"></span> Close</a></li>
+                <!-- <li><a href="#" id="import_object"><span class="glyphicon glyphicon-import"></span> Import</a></li>
                 <li><a href="#" id="export_object"><span class="glyphicon glyphicon-export"></span> Export</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="#" id="upload_script"><span class="glyphicon glyphicon-upload"></span> Upload</a></li>
-                <li><a href="#" id="download_script"><span class="glyphicon glyphicon-upload"></span> Download</a></li>
+                <li><a href="#" id="download_script"><span class="glyphicon glyphicon-upload"></span> Download</a></li> -->
                 <li role="separator" class="divider"></li>
                 <li><a href="#" id="show_examples"><span class="glyphicon glyphicon-education"></span> Examples</a></li>
               </ul>
             </li>
-            <li><a id="validate_button" href="#" data-toggle="tooltip" title="Validate"><span class="glyphicon glyphicon-ok"></span></a></li>
-            <li><a id="debug_button" href="#" data-toggle="tooltip" title="Debug"><span class="fa fa-bug fa-lg" style="margin-top:3px;"></span></a></li>
-            <li><a id="build_button" href="#" data-toggle="tooltip" title="Build (F5)"><span class="glyphicon glyphicon-play"></span></a></li>
+            <!-- <li><a id="validate_button" href="#" data-toggle="tooltip" title="Validate"><span class="glyphicon glyphicon-ok"></span></a></li> -->
+            <!-- <li><a id="debug_button" href="#" data-toggle="tooltip" title="Debug"><span class="fa fa-bug fa-lg" style="margin-top:3px;"></span></a></li> -->
             <li><a href="#" id="front_view" data-toggle="tooltip" title="Front View (5)"><img src="assets/images/icons/front_view.svg" alt="Front View" class="pull-left icon"/></a></li>
             <li><a href="#" id="back_view" data-toggle="tooltip" title="Back View (5)"><img src="assets/images/icons/back_view.svg" alt="Back View" class="pull-left icon"/></a></li>
             <li><a href="#" id="top_view" data-toggle="tooltip" title="Top View (8)"><img src="assets/images/icons/top_view.svg" alt="Top View" class="pull-left icon"/></a></li>
@@ -52,6 +52,7 @@
             <li><a href="#" id="left_view" data-toggle="tooltip" title="Left Side View (4)"><img src="assets/images/icons/left_side_view.svg" alt="Left Side View" class="pull-left icon"/></a></li>
             <li><a href="#" id="iso_view" data-toggle="tooltip" title="Isometric View (+)"><img src="assets/images/icons/axiometric_view.svg" alt="Isometric View" class="pull-left icon"/></a></li>
             <li><a href="#" id="zoom_to_fit" data-toggle="tooltip" title="Zoom To Fit"><img src="assets/images/icons/zoom_all.svg" alt="Zoom To Fit" class="pull-left icon"/></a></li>
+            <li><a href="#" id="build_button" data-toggle="tooltip" title="Refresh (F5)"><span class="glyphicon glyphicon-refresh"></span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -100,30 +101,10 @@
     <script type="text/javascript" src="assets/js/cadquery.js"></script>
     <script type="text/javascript" src="assets/js/builder.js"></script>
 
-    <div id="editor-panel" class="panel panel-default">
-        <div id="editor"># 'import cadquery as cq' is run for you
-
-# These can be modified rather than changing the box's code directly
-length = 10.0
-height = 10.0
-thickness = 10.0
-
-# Create a 3D box based on the dimension variables above
-result = cq.Workplane("XY").box(length, height, thickness)
-
-# Render the solid using CQGI
-build_object(result)</div>
-    </div>
+    <!-- 3D viewer -->
     <div id="modelview">
       <div id="indicator">
       </div>
     </div>
-    <script>
-        'use strict';
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.getSession().setMode("ace/mode/python");
-        editor.$blockScrolling = Infinity;
-    </script>
 </body>
 </html>

@@ -28,17 +28,15 @@ app.on('window-all-closed', function() {
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({width: 800, height: 600, icon: __dirname + '/assets/images/cadquery-gui_logo_dark.svg',});
   mainWindow.maximize();
+  mainWindow.setMenu(null);
 
   // const menu = Menu.buildFromTemplate(template.template);
   // Menu.setApplicationMenu(menu);
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
-
-  // Open the DevTools, if desired
-  // mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
@@ -74,5 +72,10 @@ app.on('ready', function() {
     // console.log('Ctrl+O pressed');
 
     mainWindow.webContents.executeJavaScript("openScript();");
+  });
+
+  ret = localShortcut.register(mainWindow, 'CommandOrControl+Shift+C', function() {
+    // Open the DevTools, if desired
+    mainWindow.webContents.openDevTools();
   });
 });

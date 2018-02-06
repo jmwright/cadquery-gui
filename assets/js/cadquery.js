@@ -11,7 +11,7 @@ var gFileName = null;
 
 $(document).ready(function() {
     $('#build_button').on('click', function() {
-      BUILDER.build();
+      BUILDER.build(gFileName);
     });
 
     $('#docs').on('click', function() {
@@ -127,17 +127,19 @@ function newScript() {
   // We're starting a new script
   gFileName = null;
 
-  editor.setValue("# 'import cadquery as cq' is run for you\n\n#Renders your scripted object\nbuild_object(result)");
+  // editor.setValue("# 'import cadquery as cq' is run for you\n\n#Renders your scripted object\nbuild_object(result)");
 }
 
 function openScript() {
   dialog.showOpenDialog({ filters: [{ name: 'Python', extensions: ['py'] }]}, function (fileNames) {
     if (fileNames === undefined) return;
     var fileName = fileNames[0];
-    gFileName = fileName; // Keep a reference to this for later
-    fs.readFile(fileName, 'utf-8', function (err, data) {
-      editor.setValue(data);
-    });
+
+    // Keep a reference to this for later
+    gFileName = fileName;
+
+    // Display the model in the 3D view
+    BUILDER.build(gFileName);
   });
 }
 
@@ -147,9 +149,9 @@ function saveScript() {
     return;
   }
   else {
-    fs.writeFile(gFileName, editor.getValue(), function (err) {
-      console.log(err);
-    });
+    // fs.writeFile(gFileName, editor.getValue(), function (err) {
+    //   console.log(err);
+    // });
   }
 }
 
@@ -159,9 +161,9 @@ function saveScriptAs() {
     // We want to keep a reference to the file for saving later
     gFileName = fileName;
 
-    fs.writeFile(fileName, editor.getValue(), function (err) {
-      console.log(err);
-    });
+    // fs.writeFile(fileName, editor.getValue(), function (err) {
+    //   console.log(err);
+    // });
   });
 }
 

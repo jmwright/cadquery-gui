@@ -11,7 +11,7 @@ html, body {
 }
 
 #modelview {
-    width:68%;
+    width:100%;
     height:100%;
     z-index:50;
     float:left;
@@ -31,24 +31,6 @@ html, body {
     right: 0px;
     bottom: 0px;
     z-index: 100;
-}
-
-#editor-panel {
-    float:left;
-    width:32%;
-    height: 100%;
-    min-height: 100%;
-    margin:0px;
-    padding:4px;
-    background-color:#f8f8f8;
-}
-
-#editor {
-    position:relative;
-    left:0px;
-    height: 100%;
-    min-height: 100%;
-    width:100%;
 }
 
 .icon {
