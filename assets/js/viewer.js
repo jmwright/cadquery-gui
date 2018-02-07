@@ -211,7 +211,14 @@ var VIEWER = function() {
       zoomAll();
   }
 
-  // Fits everything in the scene properly within the viewport
+  // Allows a UI to re-center the object in the view and zoom to the proper distance
+  function fitAll() {
+    controls.reset();
+
+    zoomAll();
+  }
+
+  // Zooms the main object(s) in the scene to to the proper distance
   function zoomAll() {
       var distToCenter = safeDistance();
 
@@ -234,7 +241,8 @@ var VIEWER = function() {
       },
       loadGeometry : loadGeometry,
       setView : setCameraView,
-      zoomAll : zoomAll
+      zoomAll : zoomAll,
+      fitAll: fitAll
       // setZoom : function(factor){
       //     camera.position.multiplyScalar(factor);
       // },
