@@ -88,6 +88,7 @@ def main(argv):
     # Read the user's script file in and execute it
     with open(script_file, 'r') as content_file:
       user_script = content_file.read()
+
     build_result = cqgi.parse(user_script).build()
 
     # In case we have multipe objects to pass back
@@ -96,7 +97,7 @@ def main(argv):
     # Step through all of the objects returned
     for obj in build_result.results:
         # Convert the object that was returned to JSON that we can render
-        s = obj.val()
+        s = obj.shape.val()
         tess = s.tessellate(0.1) #TODO: user provided tolerance needed
 
         mesher = JsonMesh() #warning: needs to be changed to remove buildTime and exportTime!!!
