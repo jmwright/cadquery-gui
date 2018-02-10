@@ -76,7 +76,19 @@ var BUILDER = function() {
     // });
   }
 
+  function edit(path) {
+    exec("atom " + path, function(error, stdout, stderr) {
+      if (error === undefined || error === null) {
+          console.log("Success");
+      }
+      else {
+          console.log(`exec error: ${error}; stderr: ${stderr}`);
+      }
+    });
+  }
+
   return {
-    build: build
+    build: build,
+    edit: edit
   };
 }();

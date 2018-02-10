@@ -14,6 +14,10 @@ $(document).ready(function() {
       BUILDER.build(gFileName);
     });
 
+    $('#edit_button').on('click', function() {
+      BUILDER.edit(gFileName);
+    });
+
     $('#docs').on('click', function() {
       shell.openExternal('http://dcowden.github.io/cadquery/');
     });
