@@ -8,7 +8,7 @@
     <title>CadQuery GUI</title>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
   </head>
-  <body>
+  <body id="mainPane">
     <nav class="navbar navbar-default" style="margin-bottom:0px;">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -67,7 +67,10 @@
             <li><a href="#" id="left_view" data-toggle="tooltip" title="Left Side View (4)"><img src="assets/images/icons/left_side_view.svg" alt="Left Side View" class="pull-left icon"/></a></li>
             <li><a href="#" id="iso_view" data-toggle="tooltip" title="Isometric View (+)"><img src="assets/images/icons/axiometric_view.svg" alt="Isometric View" class="pull-left icon"/></a></li>
             <li><a href="#" id="zoom_to_fit" data-toggle="tooltip" title="Zoom To Fit"><img src="assets/images/icons/zoom_all.svg" alt="Zoom To Fit" class="pull-left icon"/></a></li>
-            <li><a href="#" id="build_button" data-toggle="tooltip" title="Refresh (F5)"><span class="glyphicon glyphicon-play"></span></a></li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li><a href="#" id="edit_button" data-toggle="tooltip" title="Edit"><span class="glyphicon glyphicon-edit"></span></a></li>
+            <li><a href="#" id="build_button" data-toggle="tooltip" title="Build (F5)"><span class="glyphicon glyphicon-play"></span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -89,12 +92,10 @@
     <script type="text/javascript" src="vendor/js/bootstrap.min.js"></script>
 
     <!--3D related third-party JavaScripts-->
-    <script type="text/javascript" src="vendor/js/three/three.js"></script>
+    <script type="text/javascript" src="vendor/js/three/three.min.js"></script>
     <script type="text/javascript" src="vendor/js/three/Detector.js"></script>
-    <!-- <script type="text/javascript" src="vendor/js/three/TrackballControls.js"></script> -->
     <script type="text/javascript" src="vendor/js/three/Projector.js"></script>
     <script type="text/javascript" src="vendor/js/three/CanvasRenderer.js"></script>
-    <!-- <script type="text/javascript" src="vendor/js/threex/dragpancontrols.js"></script> -->
     <script type="text/javascript" src="vendor/js/three/OrbitControls.js"></script>
     <script type="text/javascript"  src="vendor/js/ace/ace.js" charset="utf-8"></script>
 

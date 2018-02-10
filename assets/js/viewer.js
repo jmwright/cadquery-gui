@@ -39,6 +39,7 @@ var VIEWER = function() {
       // camera
       camera = new THREE.PerspectiveCamera(40, window.innerWidth / (window.innerHeight - navBarHeight), 1, 10000);
       camera.position.set(60, 60, 60);
+      camera.up.set( 0, 0, 1 );
 
       // controls
       controls = new THREE.OrbitControls(camera);
@@ -85,6 +86,7 @@ var VIEWER = function() {
 
       // Base grid helps us orient ourselves
       var baseGrid = new THREE.GridHelper(30, 1);
+      baseGrid.geometry.rotateX( Math.PI / 2 );
       scene.add(baseGrid);
 
       render();
@@ -175,20 +177,23 @@ var VIEWER = function() {
 
   // Allows the GUI to pass named views to get the desired camera position
   function setCameraView(viewName) {
+      // If there are no objects rendered, don't mess with moving the camera around
+      if (currentObjects.length === 0) return;
+
       var d = safeDistance();
       controls.reset();
 
       if(viewName === 'ISO') {
           // Move the camera to show us an isometric view
-          setCameraPosition(d, d, d);
+          setCameraPosition(d, -d, d);
       }
       else if(viewName === 'TOP') {
           // Move the camera to show us a top view
-          setCameraPosition(0, d, 0);
+          setCameraPosition(0, 0, d);
       }
       else if(viewName === 'BOTTOM') {
           // Move the camera to show us a bottom view
-          setCameraPosition(0, -d, 0);
+          setCameraPosition(0, 0, -d);
       }
       else if(viewName === 'LEFT') {
           // Move the camera to show us a left side view
@@ -200,11 +205,27 @@ var VIEWER = function() {
       }
       else if(viewName === 'FRONT') {
           // Move the camera to show us a front view
-          setCameraPosition(0, 0, d);
+          setCameraPosition(0, d, 0);
       }
       else if(viewName === 'BACK') {
           // Move the camera to show us a back view
-          setCameraPosition(0, 0, -d);
+          setCameraPosition(0, -d, 0);
+      }
+      else if(viewName === 'BOTTOM_LEFT') {
+          // Move the camera to show us a bottom left
+          setCameraPosition(d, d, -d);
+      }
+      else if(viewName === 'BOTTOM_RIGHT') {
+          // Move the camera to show us a back view
+          setCameraPosition(-d, d, -d);
+      }
+      else if(viewName === 'TOP_LEFT') {
+          // Move the camera to show us a bottom left
+          setCameraPosition(d, d, d);
+      }
+      else if(viewName === 'TOP_RIGHT') {
+          // Move the camera to show us a back view
+          setCameraPosition(-d, d, d);
       }
 
       // Make sure everything fits in the view
@@ -242,7 +263,8 @@ var VIEWER = function() {
       loadGeometry : loadGeometry,
       setView : setCameraView,
       zoomAll : zoomAll,
-      fitAll: fitAll
+      fitAll: fitAll,
+      setCameraPosition: setCameraPosition
       // setZoom : function(factor){
       //     camera.position.multiplyScalar(factor);
       // },

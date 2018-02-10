@@ -102,6 +102,69 @@ $(document).ready(function() {
       VIEWER.fitAll();
     });
 
+    var curView = 'ISO';
+    $("#mainPane").keypress(function(e) {
+      // Handle hotkeys for the 3D view
+      var code = e.keyCode || e.which;
+
+      // Numpad 0 (iso, fit all)
+      if(code == 48) {
+        VIEWER.fitAll();
+        curView = 'ISO';
+      }
+      // Numpad 1, bottom left
+      else if (code == 49) {
+        VIEWER.setView('BOTTOM_LEFT');
+        curView = 'BOTTOM_LEFT';
+      }
+      // Numpad 2, bottom
+      else if (code == 50) {
+        VIEWER.setView('BOTTOM');
+        curView = 'BOTTOM';
+      }
+      // Numpad 3, bottom right
+      else if (code == 51) {
+        VIEWER.setView('BOTTOM_RIGHT');
+        curView = 'BOTTOM_RIGHT';
+      }
+      // Numpad 4, bottom right
+      else if (code == 52) {
+        VIEWER.setView('LEFT');
+        curView = 'LEFT';
+      }
+      // Numpad 5, front/back swap
+      else if (code == 53) {
+        if (curView !== 'FRONT') {
+          VIEWER.setView('FRONT');
+          curView = 'FRONT';
+        }
+        else {
+          VIEWER.setView('BACK');
+          curView = 'BACK';
+        }
+      }
+      // Numpad 6, bottom right
+      else if (code == 54) {
+        VIEWER.setView('RIGHT');
+        curView = 'RIGHT';
+      }
+      // Numpad 7, top left
+      else if (code == 55) {
+        VIEWER.setView('TOP_LEFT');
+        curView = 'TOP_LEFT';
+      }
+      // Numpad 8, top
+      else if (code == 56) {
+        VIEWER.setView('TOP');
+        curView = 'TOP';
+      }
+      // Numpad 9, top
+      else if (code == 57) {
+        VIEWER.setView('TOP_RIGHT');
+        curView = 'TOP_RIGHT';
+      }
+    });
+
     $('#settings_button').on('click', function() {
       notImplementedYet();
     });
@@ -121,6 +184,10 @@ $(document).ready(function() {
       height: 600,
       containerId: "modelview"
     });
+
+    // Temporary to help debug views
+    // gFileName = '/home/jwright/Downloads/caster_sleeve.py'
+    // BUILDER.build(gFileName);
 });
 
 function newScript() {
