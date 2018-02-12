@@ -12,10 +12,10 @@ var VIEWER = function() {
   };
   // material
   var material = new THREE.MeshPhongMaterial( {
-      color: 0x00ffff,
+      color: 0xCCCCCC,
       shading: THREE.FlatShading,
       transparent: true,
-      opacity: 0.7,
+      opacity: 1.0
   } );
 
   // Sets the main 3D scene and the origin scene up
@@ -50,8 +50,11 @@ var VIEWER = function() {
 
       // light
       var light = new THREE.DirectionalLight(0xffffff, 1);
-      light.position.set( 20, 20, 0 );
-      scene.add( light );
+      light.position.set(60, 60, 60);
+      scene.add(light);
+      var light2 = new THREE.DirectionalLight(0xffffff, 1);
+      light.position.set(-60, -60, -60);
+      scene.add(light2);
 
       // Set up the origin indicator
       originContainer = document.getElementById('indicator');
