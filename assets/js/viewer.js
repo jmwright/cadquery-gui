@@ -53,7 +53,7 @@ var VIEWER = function() {
       light.position.set(60, 60, 60);
       scene.add(light);
       var light2 = new THREE.DirectionalLight(0xffffff, 1);
-      light.position.set(-60, -60, -60);
+      light2.position.set(-60, -60, -60);
       scene.add(light2);
 
       // Set up the origin indicator
