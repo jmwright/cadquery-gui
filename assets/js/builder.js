@@ -10,9 +10,6 @@ var BUILDER = function() {
   function build(path) {
     var results = "{}";
 
-    // Automatically track and cleanup files at exit
-    // temp.track();
-
     // Execute the script using the python interpreter
     exec("python " + process.cwd() + "/assets/python/cq_process.py --file=" + path + " --outputFormat=threeJS", function(error, stdout, stderr) {
       if (error === undefined || error === null) {
@@ -37,49 +34,23 @@ var BUILDER = function() {
           console.log(`exec error: ${error}; stderr: ${stderr}`);
       }
     });
-
-    // Create a temporary file that will hold the script so that we can execute it
-    // temp.open('cqscript', function(err, info) {
-    //   if (!err) {
-    //     fs.write(info.fd, scriptText);
-    //     fs.close(info.fd, function(err) {
-    //       if (err !== null) {
-    //         console.log("Error closing file object: " + err);
-    //       }
-    //
-    //       // Execute the script using the python interpreter
-    //       exec("python " + process.cwd() + "/assets/python/cq_process.py --file=" + info.path + " --outputFormat=threeJS", function(error, stdout, stderr) {
-    //         if (error === undefined || error === null) {
-    //             var lines = stdout.trim().split('\n');
-    //
-    //             // Remove any extra output from before the JSON
-    //             for(var i = 0; i < lines.length; i++) {
-    //               if (lines[i][0] !== '{') {
-    //                 delete lines[i]
-    //               }
-    //               else {
-    //                 break;
-    //               }
-    //             }
-    //
-    //             results = JSON.parse(lines.join('\n'));
-    //
-    //             // VIEWER will display all of the objects that are in the returned JSON
-    //             VIEWER.loadGeometry(results);
-    //         }
-    //         else {
-    //             console.log(`exec error: ${error}; stderr: ${stderr}`);
-    //         }
-    //       });
-    //     });
-    //   }
-    // });
   }
 
+  // Watches a script for changes so that can be re-executed
+  function watch(path) {
+    fs.watch(path, { encoding: 'buffer' }, (eventType, filename) => {
+      if (filename) {
+        build(path);
+      }
+    });
+  }
+
+  // Opens the script rendered in the 3D view in an editor of the user's choice
   function edit(path) {
     exec("atom " + path, function(error, stdout, stderr) {
       if (error === undefined || error === null) {
-          console.log("Success");
+        // Make sure that updates to the file are handled
+        watch(path);
       }
       else {
           console.log(`exec error: ${error}; stderr: ${stderr}`);
