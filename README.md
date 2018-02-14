@@ -1,4 +1,4 @@
-# cadquery-gui (CQG)
+# cadquery-gui (cqg)
 An Electron-based CAD GUI built around [CadQuery](https://github.com/dcowden/cadquery/blob/master/README.md). 
 
 ***Note: This software is in alpha and is seeing breaking changes frequently. It is not ready for production use.***
@@ -13,7 +13,7 @@ An Electron-based CAD GUI built around [CadQuery](https://github.com/dcowden/cad
 pip install git+https://github.com/dcowden/cadquery.git
 ```
 
-## Install The Latest Development Version of cadquery-gui (CQG)
+## Install The Latest Development Version of cadquery-gui (cqg)
 The latest version can be cloned directly from this GitHub repo.
 ```
 git clone https://github.com/jmwright/cadquery-gui.git
