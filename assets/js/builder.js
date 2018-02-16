@@ -8,6 +8,8 @@ var exec = require('child_process').exec;
 
 var BUILDER = function() {
   function build(path) {
+    if (path === undefined || path === null) return;
+
     var results = "{}";
 
     // Execute the script using the python interpreter
@@ -37,20 +39,31 @@ var BUILDER = function() {
   }
 
   // Watches a script for changes so that can be re-executed
-  function watch(path) {
+  function watch(path, cb) {
     fs.watch(path, { encoding: 'buffer' }, (eventType, filename) => {
       if (filename) {
         build(path);
+
+        // Update the callback for anything that wants updates to the text
+        fs.readFile(path, function read(err, data) {
+          if (err) {
+              console.log(err);
+          }
+
+          cb(data);
+        });
       }
     });
   }
 
   // Opens the script rendered in the 3D view in an editor of the user's choice
-  function edit(path) {
+  function edit(path, cb) {
+    if (path === undefined || path === null) return;
+
     exec("atom " + path, function(error, stdout, stderr) {
       if (error === undefined || error === null) {
         // Make sure that updates to the file are handled
-        watch(path);
+        watch(path, cb);
       }
       else {
           console.log(`exec error: ${error}; stderr: ${stderr}`);

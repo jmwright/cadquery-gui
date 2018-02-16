@@ -7,7 +7,14 @@ var remote = require('electron').remote;
 var dialog = require('electron').remote.dialog;
 var fs = require('fs');
 
+var SCRIPT_TEMPLATE = "import cadquery as cq\n\n" +
+  "# Render script results using the CadQuery Gateway Interface\n" +
+  "# Use the following to render your model with grey RGB and no transparency\n" +
+  "show_object(result, options={\"rgba\":(204, 204, 204, 0.0)})"
+
 var gFileName = null;
+var prevScriptText = "";
+var curScriptText = "";
 
 $(document).ready(function() {
     $('#build_button').on('click', function() {
@@ -15,7 +22,7 @@ $(document).ready(function() {
     });
 
     $('#edit_button').on('click', function() {
-      BUILDER.edit(gFileName);
+      BUILDER.edit(gFileName, syncScript);
     });
 
     $('#docs').on('click', function() {
@@ -189,6 +196,9 @@ $(document).ready(function() {
       containerId: "modelview"
     });
 
+    // Initialize a template that the user can start with
+    curScriptText = SCRIPT_TEMPLATE;
+
     // Temporary to help debug views
     // gFileName = '/home/jwright/Downloads/caster_sleeve.py'
     // BUILDER.build(gFileName);
@@ -198,16 +208,65 @@ function newScript() {
   // We're starting a new script
   gFileName = null;
 
-  // editor.setValue("# 'import cadquery as cq' is run for you\n\n#Renders your scripted object\nbuild_object(result)");
+  // Keep the user from dumping changes they might want to keep
+  if (curScriptText !== prevScriptText && prevScriptText !== "") {
+    dialog.showMessageBox({type: "question",
+                          buttons: ["Yes", "No"],
+                          title: "Confirm",
+                          message: "Save current work first?"},
+    function(answer) {
+      // If the user answers 'Yes', they get a save-as dialog
+      if (answer === 0) {
+        saveScriptAs("Save");
+      }
+      else {
+        // Initialize a template that the user can start with
+        curScriptText = SCRIPT_TEMPLATE;
+
+        saveScriptAs("New");
+      }
+    });
+  }
+  else {
+    // Initialize a template that the user can start with
+    curScriptText = SCRIPT_TEMPLATE;
+
+    saveScriptAs("New");
+  }
 }
 
 function openScript() {
-  dialog.showOpenDialog({ filters: [{ name: 'Python', extensions: ['py'] }]}, function (fileNames) {
+  // Keep the user from dumping changes they might want to keep
+  if (curScriptText !== prevScriptText && prevScriptText !== "") {
+    dialog.showMessageBox({type: "question",
+                          buttons: ["Yes", "No"],
+                          title: "Confirm",
+                          message: "Save current work first?"},
+    function(answer) {
+      // If the user answers 'Yes', they get a save-as dialog
+      if (answer === 0) {
+        saveScript();
+      }
+    });
+  }
+
+  // Allow the user to open a new file
+  dialog.showOpenDialog({ filters: [{ name: 'Python', extensions: ['py'] }]},
+  function (fileNames) {
     if (fileNames === undefined) return;
     var fileName = fileNames[0];
 
     // Keep a reference to this for later
     gFileName = fileName;
+
+    fs.readFile(fileName, function read(err, data) {
+      if (err) {
+          console.log(err);
+      }
+
+      curScriptText = data.toString();
+      prevScriptText = curScriptText;
+    });
 
     // Display the model in the 3D view
     BUILDER.build(gFileName);
@@ -216,26 +275,36 @@ function openScript() {
 
 function saveScript() {
   if (gFileName === undefined || gFileName === null) {
-    saveScriptAs();
-    return;
+    saveScriptAs("Save");
   }
   else {
-    // fs.writeFile(gFileName, editor.getValue(), function (err) {
-    //   console.log(err);
-    // });
+    fs.writeFile(gFileName, curScriptText, function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
   }
 }
 
-function saveScriptAs() {
-  dialog.showSaveDialog({ filters: [{ name: 'Python', extensions: ['py'] }]}, function (fileName) {
+function saveScriptAs(title) {
+  dialog.showSaveDialog({ title: title, filters: [{ name: 'Python', extensions: ['py'] }]}, function (fileName) {
     if (fileName === undefined) return;
+
     // We want to keep a reference to the file for saving later
     gFileName = fileName;
 
-    // fs.writeFile(fileName, editor.getValue(), function (err) {
-    //   console.log(err);
-    // });
+    fs.writeFile(fileName, curScriptText, function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
   });
+}
+
+// Helps us keep the changes in the external editor in sync with what is here
+function syncScript(text) {
+  curScriptText = text;
+  prevScriptText = curScriptText;
 }
 
 function notImplementedYet() {
