@@ -98,12 +98,7 @@ var VIEWER = function() {
   // Loads the JSON geometry data into the main scene
   function loadGeometry(data) {
       // Make sure that we remove all objects from the scene
-      if (currentObjects.length > 0) {
-          for (var i = 0; i < currentObjects.length; i++) {
-              scene.remove(currentObjects[i]);
-              scene.remove(currentEdges[i]);
-          }
-      }
+      clear();
 
       // Step through all the results and render them
       for(var j = 0; j < data.allResults.length; j++){
@@ -134,7 +129,7 @@ var VIEWER = function() {
       }
 
       render();
-      zoomAll();
+      fitAll();
   }
 
   // Shows what has been loaded into the scene
@@ -218,17 +213,33 @@ var VIEWER = function() {
           // Move the camera to show us a bottom left
           setCameraPosition(d, d, -d);
       }
+      else if(viewName === 'BOTTOM_LEFT_BACK') {
+          // Move the camera to show us a bottom left
+          setCameraPosition(d, -d, -d);
+      }
       else if(viewName === 'BOTTOM_RIGHT') {
           // Move the camera to show us a back view
           setCameraPosition(-d, d, -d);
+      }
+      else if(viewName === 'BOTTOM_RIGHT_BACK') {
+          // Move the camera to show us a back view
+          setCameraPosition(-d, -d, -d);
       }
       else if(viewName === 'TOP_LEFT') {
           // Move the camera to show us a bottom left
           setCameraPosition(d, d, d);
       }
+      else if(viewName === 'TOP_LEFT_BACK') {
+          // Move the camera to show us a bottom left
+          setCameraPosition(d, -d, d);
+      }
       else if(viewName === 'TOP_RIGHT') {
           // Move the camera to show us a back view
           setCameraPosition(-d, d, d);
+      }
+      else if(viewName === 'TOP_RIGHT_BACK') {
+          // Move the camera to show us a back view
+          setCameraPosition(-d, -d, d);
       }
 
       // Make sure everything fits in the view
@@ -257,6 +268,26 @@ var VIEWER = function() {
       controls.update();
   }
 
+  // Resets the view when closing a script or opening a new one
+  function resetView() {
+    // Get the camera and controls back in their starting position
+    fitAll();
+    camera.position.set(60, 60, 60);
+
+    clear();
+    render();
+  }
+
+  // Allows the user to clear the view for close or open operations
+  function clear() {
+    if (currentObjects.length > 0) {
+        for (var i = 0; i < currentObjects.length; i++) {
+            scene.remove(currentObjects[i]);
+            scene.remove(currentEdges[i]);
+        }
+    }
+  }
+
   //exported functions
   return {
       init: function(opts) {
@@ -267,7 +298,8 @@ var VIEWER = function() {
       setView : setCameraView,
       zoomAll : zoomAll,
       fitAll: fitAll,
-      setCameraPosition: setCameraPosition
+      setCameraPosition: setCameraPosition,
+      resetView: resetView
       // setZoom : function(factor){
       //     camera.position.multiplyScalar(factor);
       // },

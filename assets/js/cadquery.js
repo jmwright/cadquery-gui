@@ -53,19 +53,11 @@ $(document).ready(function() {
       saveScriptAs();
     });
 
-    $('#import_object').on('click', function() {
-      notImplementedYet();
+    $('#close_script').on('click', function() {
+      closeScript();
     });
 
     $('#export_object').on('click', function() {
-      notImplementedYet();
-    });
-
-    $('#upload_script').on('click', function() {
-      notImplementedYet();
-    });
-
-    $('#download_script').on('click', function() {
       notImplementedYet();
     });
 
@@ -110,7 +102,7 @@ $(document).ready(function() {
     });
 
     $('#zoom_to_fit').on('click', function() {
-      VIEWER.fitAll();
+      VIEWER.zoomAll();
     });
 
     var curView = 'ISO';
@@ -125,8 +117,14 @@ $(document).ready(function() {
       }
       // Numpad 1, bottom left
       else if (code == 49) {
-        VIEWER.setView('BOTTOM_LEFT');
-        curView = 'BOTTOM_LEFT';
+        if (curView !== 'BOTTOM_LEFT') {
+          VIEWER.setView('BOTTOM_LEFT');
+          curView = 'BOTTOM_LEFT';
+        }
+        else {
+          VIEWER.setView('BOTTOM_LEFT_BACK');
+          curView = 'BOTTOM_LEFT_BACK';
+        }
       }
       // Numpad 2, bottom
       else if (code == 50) {
@@ -135,8 +133,14 @@ $(document).ready(function() {
       }
       // Numpad 3, bottom right
       else if (code == 51) {
-        VIEWER.setView('BOTTOM_RIGHT');
-        curView = 'BOTTOM_RIGHT';
+        if (curView !== 'BOTTOM_RIGHT') {
+          VIEWER.setView('BOTTOM_RIGHT');
+          curView = 'BOTTOM_RIGHT';
+        }
+        else {
+          VIEWER.setView('BOTTOM_RIGHT_BACK');
+          curView = 'BOTTOM_RIGHT_BACK';
+        }
       }
       // Numpad 4, bottom right
       else if (code == 52) {
@@ -161,8 +165,14 @@ $(document).ready(function() {
       }
       // Numpad 7, top left
       else if (code == 55) {
-        VIEWER.setView('TOP_LEFT');
-        curView = 'TOP_LEFT';
+        if (curView !== 'TOP_LEFT') {
+          VIEWER.setView('TOP_LEFT');
+          curView = 'TOP_LEFT';
+        }
+        else {
+          VIEWER.setView('TOP_LEFT_BACK');
+          curView = 'TOP_LEFT_BACK';
+        }
       }
       // Numpad 8, top
       else if (code == 56) {
@@ -171,8 +181,14 @@ $(document).ready(function() {
       }
       // Numpad 9, top
       else if (code == 57) {
-        VIEWER.setView('TOP_RIGHT');
-        curView = 'TOP_RIGHT';
+        if (curView !== 'TOP_RIGHT') {
+          VIEWER.setView('TOP_RIGHT');
+          curView = 'TOP_RIGHT';
+        }
+        else {
+          VIEWER.setView('TOP_RIGHT_BACK');
+          curView = 'TOP_RIGHT_BACK';
+        }
       }
     });
 
@@ -299,6 +315,12 @@ function saveScriptAs(title) {
       }
     });
   });
+}
+
+function closeScript() {
+  VIEWER.resetView();
+
+  gFileName = null;
 }
 
 // Helps us keep the changes in the external editor in sync with what is here
