@@ -5,6 +5,7 @@
 var shell = require('electron').shell;
 var remote = require('electron').remote;
 var dialog = require('electron').remote.dialog;
+var BrowserWindow = require('electron').remote.BrowserWindow;
 var fs = require('fs');
 
 var SCRIPT_TEMPLATE = "import cadquery as cq\n\n" +
@@ -15,6 +16,7 @@ var SCRIPT_TEMPLATE = "import cadquery as cq\n\n" +
 var gFileName = null;
 var prevScriptText = "";
 var curScriptText = "";
+var settingsDlg = null;
 
 $(document).ready(function() {
     $('#build_button').on('click', function() {
@@ -193,7 +195,20 @@ $(document).ready(function() {
     });
 
     $('#settings_button').on('click', function() {
-      notImplementedYet();
+      settingsDlg = new BrowserWindow({show: false, width: 800, height: 600});
+      settingsDlg.setMenu(null);
+
+      settingsDlg.once('ready-to-show', () => {
+        settingsDlg.show();
+      })
+
+      settingsDlg.on('closed', () => {
+        settingsDlg = null
+      })
+
+      settingsDlg.loadURL(`file://${__dirname}/dialogs/settings_dialog.html`)
+
+      // settingsDlg.webContents.openDevTools();
     });
 
     $('#about_button').on('click', function() {

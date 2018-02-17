@@ -6,8 +6,6 @@ const {app, Menu} = require('electron');
 // const app = electron.app;  // Module to control application life.
 const BrowserWindow = require('electron').BrowserWindow;  // Module to create native browser window.
 const localShortcut = require('electron-localshortcut'); // Allows us to add hotkeys
-// const fs = require('fs');
-// var template = JSON.parse(fs.readFileSync("./menu_template.json"));
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -28,7 +26,7 @@ app.on('window-all-closed', function() {
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600, icon: __dirname + '/assets/images/cadquery-gui_logo_dark.svg',});
+  mainWindow = new BrowserWindow({width: 800, height: 600, icon: __dirname + '/assets/images/cadquery-gui_logo_dark.svg'});
   mainWindow.maximize();
   mainWindow.setMenu(null);
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../vendor/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/css/font-awesome.min.css">
+    <title>Settings</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+  </head>
+  <body id="tabPane">
+    <!-- <div class="container"> -->
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#general">General</a></li>
+      <li><a data-toggle="tab" href="#dev">Developer</a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="general" class="tab-pane fade in active" style="text-align:center;">
+        <h3>General</h3>
+        <p>Settings related to the normal operation of the cqg</p>
+        <form>
+          <label for="editor">External Editor Command</label>
+          <input type="text" name="editor" value="atom $SCRIPT_PATH" id="editor" />
+          <br />
+          <input type="checkbox" name="exec_on_save" value="exec_on_save" id="exec_on_save" />
+          <label for="exec_on_save">Execute Script on Save</label>
+        </form>
+      </div>
+      <div id="dev" class="tab-pane fade" style="text-align:center;">
+        <h3>Developer</h3>
+        <p>Settings related to the developer operation of cqg</p>
+        <form>
+          <input type="checkbox" name="debug_mode" value="debug_mode" id="debug_mode" />
+          <label for="debug_mode">Debug Mode</label>
+        </form>
+      </div>
+    </div>
+    <!-- </div> -->
+    <script type="text/javascript" src="../vendor/js/jquery-2.2.2.min.js"></script>
+    <script>window.jQuery = window.$ = typeof module === 'object' ? module.exports : jQuery</script>
+    <script type="text/javascript" src="../vendor/js/bootstrap.min.js"></script>
+  </body>
+</html>
