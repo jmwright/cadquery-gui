@@ -13,7 +13,7 @@ An Electron-based CAD GUI built around [CadQuery](https://github.com/dcowden/cad
 pip install git+https://github.com/dcowden/cadquery.git
 ```
 
-## Install The Latest Development Version of cadquery-gui (cqg)
+## Install The Latest Development Version
 The latest version can be cloned directly from this GitHub repo.
 ```
 git clone https://github.com/jmwright/cadquery-gui.git
