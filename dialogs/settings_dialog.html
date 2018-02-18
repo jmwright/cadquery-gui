@@ -12,32 +12,35 @@
     <!-- <div class="container"> -->
     <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#general">General</a></li>
-      <li><a data-toggle="tab" href="#dev">Developer</a></li>
+      <li><a data-toggle="tab" href="#keys">Keybindings</a></li>
     </ul>
     <div class="tab-content">
       <div id="general" class="tab-pane fade in active" style="text-align:center;">
-        <h3>General</h3>
-        <p>Settings related to the normal operation of the cqg</p>
-        <form>
+        <h3>Settings related to normal use</h3>
+        <form style="text-align:left;margin-left:200px;">
           <label for="editor">External Editor Command</label>
-          <input type="text" name="editor" value="atom $SCRIPT_PATH" id="editor" />
+          <input id="editor_command_line" type="text" name="editor" size="30" value="atom $SCRIPT_PATH" />
           <br />
-          <input type="checkbox" name="exec_on_save" value="exec_on_save" id="exec_on_save" />
-          <label for="exec_on_save">Execute Script on Save</label>
+          <input id="execute_on_save" type="checkbox" checked=false name="execute_on_save" />
+          <label for="execute_on_save">Execute Script on Save</label>
+          <br />
+          <input id="debug_mode" type="checkbox" checked="false" name="debug_mode" />
+          <label for="debug_mode">Debug Mode</label>
+          <br />
+          <input id="show_welcome" type="checkbox" checked="true" name="show_welcome" />
+          <label for="show_welcome">Show Welcome Dialog</label>
         </form>
       </div>
-      <div id="dev" class="tab-pane fade" style="text-align:center;">
-        <h3>Developer</h3>
-        <p>Settings related to the developer operation of cqg</p>
-        <form>
-          <input type="checkbox" name="debug_mode" value="debug_mode" id="debug_mode" />
-          <label for="debug_mode">Debug Mode</label>
-        </form>
+      <div id="keys" class="tab-pane fade" style="text-align:center;">
+        <h3>Key mappings for quick access to various functions</h3>
+        <!-- <form>
+        </form> -->
       </div>
     </div>
     <!-- </div> -->
     <script type="text/javascript" src="../vendor/js/jquery-2.2.2.min.js"></script>
     <script>window.jQuery = window.$ = typeof module === 'object' ? module.exports : jQuery</script>
     <script type="text/javascript" src="../vendor/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../assets/js/settings_dialog.js"></script>
   </body>
 </html>

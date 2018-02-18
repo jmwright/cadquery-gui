@@ -42,7 +42,10 @@ var BUILDER = function() {
   function watch(path, cb) {
     fs.watch(path, { encoding: 'buffer' }, (eventType, filename) => {
       if (filename) {
-        build(path);
+        // Make sure that the user wants to execute/build the script on save
+        if (settings.get('general.execute_on_save')) {
+          build(path);
+        }
 
         // Update the callback for anything that wants updates to the text
         fs.readFile(path, function read(err, data) {

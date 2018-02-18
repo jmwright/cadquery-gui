@@ -3,9 +3,9 @@
 'use strict';
 
 var shell = require('electron').shell;
-var remote = require('electron').remote;
 var dialog = require('electron').remote.dialog;
 var BrowserWindow = require('electron').remote.BrowserWindow;
+var settings = require('electron').remote.require('electron-settings');
 var fs = require('fs');
 
 var SCRIPT_TEMPLATE = "import cadquery as cq\n\n" +
@@ -195,7 +195,7 @@ $(document).ready(function() {
     });
 
     $('#settings_button').on('click', function() {
-      settingsDlg = new BrowserWindow({show: false, width: 800, height: 600});
+      settingsDlg = new BrowserWindow({show: false, width: 800, height: 600, center: true});
       settingsDlg.setMenu(null);
 
       settingsDlg.once('ready-to-show', () => {

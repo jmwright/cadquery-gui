@@ -6,6 +6,7 @@ const {app, Menu} = require('electron');
 // const app = electron.app;  // Module to control application life.
 const BrowserWindow = require('electron').BrowserWindow;  // Module to create native browser window.
 const localShortcut = require('electron-localshortcut'); // Allows us to add hotkeys
+const settings = require('electron-settings');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -25,6 +26,14 @@ app.on('window-all-closed', function() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
+  // Set defaults for the settings if this is the first time the app has run
+  if (!settings.has('startup.first_run') || settings.get('startup.first_run')) {
+      setDefaultSettings();
+
+      // Keep track of the fact that we have already been here
+      // settings.set('startup.first_run', false);
+  }
+
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600, icon: __dirname + '/assets/images/cadquery-gui_logo_dark.svg'});
   mainWindow.maximize();
@@ -46,28 +55,24 @@ app.on('ready', function() {
 
   // Register an 'F5' key shortcut listener to execute a script
   var ret = localShortcut.register(mainWindow, 'F5', function() {
-    // console.log('F5 pressed');
 
     mainWindow.webContents.executeJavaScript("BUILDER.build();");
   });
 
   // Register an 'Ctrl+S' key shortcut listener to execute a script
   ret = localShortcut.register(mainWindow, 'CommandOrControl+S', function() {
-    // console.log('Ctrl+S pressed');
 
     mainWindow.webContents.executeJavaScript("saveScript();");
   });
 
   // Register an 'Ctrl+N' key shortcut listener to execute a script
   ret = localShortcut.register(mainWindow, 'CommandOrControl+N', function() {
-    // console.log('Ctrl+S pressed');
 
     mainWindow.webContents.executeJavaScript("newScript();");
   });
 
   // Register an 'Ctrl+O' key shortcut listener to execute a script
   ret = localShortcut.register(mainWindow, 'CommandOrControl+O', function() {
-    // console.log('Ctrl+O pressed');
 
     mainWindow.webContents.executeJavaScript("openScript();");
   });
@@ -77,3 +82,18 @@ app.on('ready', function() {
     mainWindow.webContents.openDevTools();
   });
 });
+
+// Sets a sane starting set of settings for the app
+function setDefaultSettings() {
+  // Welcome dialog setting
+  settings.set('startup.show_welcome', true);
+
+  // Editor command line setting
+  settings.set('general.editor_command_line', 'atom $MYSCRIPT_FULL_PATH');
+
+  // Execute script on save setting
+  settings.set('general.execute_on_save', true);
+
+  // Debug mode setting
+  settings.set('general.debug_mode', false);
+}
