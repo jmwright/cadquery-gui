@@ -42,6 +42,12 @@ $(document).ready(function() {
     window.close();
   });
 
+  // Opens a reference for users who want to change cqg's keymappings
+  $('#modifiers_link').on('click', function(e) {
+    e.preventDefault();
+    require('electron').shell.openExternal("https://electronjs.org/docs/api/accelerator#available-modifiers");
+  });
+
   // Welcome dialog setting
   $('#show_welcome').prop('checked', settings.get('startup.show_welcome'));
 
