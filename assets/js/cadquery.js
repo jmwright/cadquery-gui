@@ -282,7 +282,7 @@ function openScript() {
   }
 
   // Allow the user to open a new file
-  dialog.showOpenDialog({ filters: [{ name: 'Python', extensions: ['py'] }]},
+  dialog.showOpenDialog({ title: 'Open', filters: [{ name: 'Python', extensions: ['py'] }]},
   function (fileNames) {
     if (fileNames === undefined) return;
     var fileName = fileNames[0];

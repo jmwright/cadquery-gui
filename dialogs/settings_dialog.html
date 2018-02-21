@@ -19,23 +19,38 @@
         <h3>Settings related to normal use</h3>
         <form style="text-align:left;margin-left:200px;">
           <label for="editor">External Editor Command</label>
-          <input id="editor_command_line" type="text" name="editor" size="30" value="atom $SCRIPT_PATH" />
+          <input id="editor_command_line" type="text" name="editor" size="30" value="atom $SCRIPT_PATH" data-toggle="tooltip" title="cqg relies on external editors to write and change scripts. This setting allows users to set their owm command line which will launch an editor with whatever options are needed." />
           <br />
           <input id="execute_on_save" type="checkbox" checked=false name="execute_on_save" />
-          <label for="execute_on_save">Execute Script on Save</label>
+          <label for="execute_on_save" data-toggle="tooltip" title="cqg monitors an open model script for changes. When changes are made, cqg will try to automatically update the model in the 3D view. This can lead to slow load times with more geometrically complex models, or models that are compuationally complex. Disable this is the reloads are too slow and use the Execute button in the tool bar.">Execute Script on Save</label>
           <br />
           <input id="debug_mode" type="checkbox" checked="false" name="debug_mode" />
-          <label for="debug_mode">Debug Mode</label>
+          <label for="debug_mode" data-toggle="tooltip" title="This option disables or enables whether error and debugging output from the application will be shown in the developer console which is opened with Ctrl+Shift+C. Enabling this option can be helpful when troubleshooting an error in cqg.">Debug Mode</label>
           <br />
           <input id="show_welcome" type="checkbox" checked="true" name="show_welcome" />
-          <label for="show_welcome">Show Welcome Dialog</label>
+          <label for="show_welcome" data-toggle="tooltip" title="The welcome dialog is the first thing that new users see and is designed to help them get started. There is a checkbox to disable the popup within the dialog itself, which is the same as this setting's checkbox.">Show Welcome Dialog</label>
         </form>
       </div>
       <div id="keys" class="tab-pane fade" style="text-align:center;">
         <h3>Key mappings for quick access to various functions</h3>
-        <!-- <form>
-        </form> -->
+        <form style="text-align:left;margin-left:200px;">
+          <label for="build_script_hotkey">Build Script</label>
+          <input id="build_script_hotkey" type="text" name="build_script_hotkey" size="30" value="F5" data-toggle="tooltip" title="Executes a component's script and then displays the result(s) in the 3D view." />
+          <br />
+          <label for="save_script_hotkey">Save Script</label>
+          <input id="save_script_hotkey" type="text" name="save_script_hotkey" size="30" value="CommandOrControl+S" data-toggle="tooltip" title="Saves the current state of a component's script." />
+          <br />
+          <label for="new_script_hotkey">New Script</label>
+          <input id="new_script_hotkey" type="text" name="new_script_hotkey" size="30" value="CommandOrControl+N" data-toggle="tooltip" title="Creates a new component script." />
+          <br />
+          <label for="open_script_hotkey">Open Script</label>
+          <input id="open_script_hotkey" type="text" name="open_script_hotkey" size="30" value="CommandOrControl+O" data-toggle="tooltip" title="Opens an existing component script." />
+          <br />
+        </form>
       </div>
+      <button id="apply_settings" type="button" class="btn btn-success" style="position:absolute;left:570px;top:550px;">Apply</button>
+      <button id="close_settings" type="button" class="btn btn-default" style="position:absolute;left:635px;top:550px;">Close</button>
+      <button id="cancel_settings" type="button" class="btn btn-default" style="position:absolute;left:700px;top:550px;">Cancel</button>
     </div>
     <!-- </div> -->
     <script type="text/javascript" src="../vendor/js/jquery-2.2.2.min.js"></script>

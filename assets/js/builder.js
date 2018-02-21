@@ -5,6 +5,7 @@
 var temp = require('temp');
 var fs   = require('fs');
 var exec = require('child_process').exec;
+var settings = require('electron').remote.require('electron-settings');
 
 var BUILDER = function() {
   function build(path) {
@@ -63,7 +64,7 @@ var BUILDER = function() {
   function edit(path, cb) {
     if (path === undefined || path === null) return;
 
-    exec("atom " + path, function(error, stdout, stderr) {
+    exec(settings.get('general.editor_command_line') + ' ' + path, function(error, stdout, stderr) {
       if (error === undefined || error === null) {
         // Make sure that updates to the file are handled
         watch(path, cb);

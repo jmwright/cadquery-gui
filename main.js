@@ -31,7 +31,7 @@ app.on('ready', function() {
       setDefaultSettings();
 
       // Keep track of the fact that we have already been here
-      // settings.set('startup.first_run', false);
+      settings.set('startup.first_run', false);
   }
 
   // Create the browser window.
@@ -54,25 +54,25 @@ app.on('ready', function() {
   });
 
   // Register an 'F5' key shortcut listener to execute a script
-  var ret = localShortcut.register(mainWindow, 'F5', function() {
+  var ret = localShortcut.register(mainWindow, settings.get('hotkeys.build_script_hotkey'), function() {
 
     mainWindow.webContents.executeJavaScript("BUILDER.build();");
   });
 
-  // Register an 'Ctrl+S' key shortcut listener to execute a script
-  ret = localShortcut.register(mainWindow, 'CommandOrControl+S', function() {
+  // Register an 'Ctrl+S' key shortcut listener to save a script
+  ret = localShortcut.register(mainWindow, settings.get('hotkeys.save_script_hotkey'), function() {
 
     mainWindow.webContents.executeJavaScript("saveScript();");
   });
 
   // Register an 'Ctrl+N' key shortcut listener to execute a script
-  ret = localShortcut.register(mainWindow, 'CommandOrControl+N', function() {
+  ret = localShortcut.register(mainWindow, settings.get('hotkeys.new_script_hotkey'), function() {
 
     mainWindow.webContents.executeJavaScript("newScript();");
   });
 
   // Register an 'Ctrl+O' key shortcut listener to execute a script
-  ret = localShortcut.register(mainWindow, 'CommandOrControl+O', function() {
+  ret = localShortcut.register(mainWindow, settings.get('hotkeys.open_script_hotkey'), function() {
 
     mainWindow.webContents.executeJavaScript("openScript();");
   });
@@ -89,11 +89,23 @@ function setDefaultSettings() {
   settings.set('startup.show_welcome', true);
 
   // Editor command line setting
-  settings.set('general.editor_command_line', 'atom $MYSCRIPT_FULL_PATH');
+  settings.set('general.editor_command_line', 'atom');
 
   // Execute script on save setting
   settings.set('general.execute_on_save', true);
 
   // Debug mode setting
   settings.set('general.debug_mode', false);
+
+  // Hotkey for building and displaying scripts
+  settings.set('hotkeys.build_script_hotkey', 'F5');
+
+  // Hotkey for saving scripts
+  settings.set('hotkeys.save_script_hotkey', 'CommandOrControl+S');
+
+  // Hotekey for creating a new script
+  settings.set('hotkeys.new_script_hotkey', 'CommandOrControl+N');
+
+  // Hotkey for opening an existing script
+  settings.set('hotkeys.open_script_hotkey', 'CommandOrControl+O');
 }
