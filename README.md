@@ -1,9 +1,9 @@
 # cadquery-gui (cqg)
-An Electron-based CAD GUI built around [CadQuery](https://github.com/dcowden/cadquery/blob/master/README.md). 
+An Electron-based CAD GUI built around [CadQuery](https://github.com/dcowden/cadquery/blob/master/README.md).
 
 ***Note: This software is in alpha and is seeing breaking changes frequently. It is not ready for production use.***
 
-![Pre-Alpha Build](http://innovationsts.com/images/blog/gui_pre_alpha_version_06_09_16.png)
+![User Interface Overview](docs/images/gui.png)
 
 ## Prerequisites
 1. Install npm
