@@ -1,5 +1,5 @@
 # cadquery-gui (cqg)
-An Electron-based CAD GUI built around [CadQuery](https://github.com/dcowden/cadquery/blob/master/README.md).
+An Electron-based CAD GUI built for [CadQuery](https://github.com/dcowden/cadquery/blob/master/README.md).
 
 ***Note: This software is in alpha and is seeing breaking changes frequently. It is not ready for production use.***
 
