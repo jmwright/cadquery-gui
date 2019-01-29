@@ -53,16 +53,10 @@ app.on('ready', function() {
     mainWindow = null;
   });
 
-  // Register an 'F5' key shortcut listener to execute a script
+  // Register an 'F9' key shortcut listener to execute a script
   var ret = localShortcut.register(mainWindow, settings.get('hotkeys.build_script_hotkey'), function() {
 
     mainWindow.webContents.executeJavaScript("BUILDER.build();");
-  });
-
-  // Register an 'Ctrl+S' key shortcut listener to save a script
-  ret = localShortcut.register(mainWindow, settings.get('hotkeys.save_script_hotkey'), function() {
-
-    mainWindow.webContents.executeJavaScript("saveScript();");
   });
 
   // Register an 'Ctrl+N' key shortcut listener to execute a script
@@ -85,9 +79,6 @@ app.on('ready', function() {
 
 // Sets a sane starting set of settings for the app
 function setDefaultSettings() {
-  // Welcome dialog setting
-  settings.set('startup.show_welcome', true);
-
   // Editor command line setting
   settings.set('general.editor_command_line', 'atom');
 
@@ -98,14 +89,17 @@ function setDefaultSettings() {
   settings.set('general.debug_mode', false);
 
   // Hotkey for building and displaying scripts
-  settings.set('hotkeys.build_script_hotkey', 'F5');
-
-  // Hotkey for saving scripts
-  settings.set('hotkeys.save_script_hotkey', 'CommandOrControl+S');
+  settings.set('hotkeys.build_script_hotkey', 'F9');
 
   // Hotekey for creating a new script
   settings.set('hotkeys.new_script_hotkey', 'CommandOrControl+N');
 
   // Hotkey for opening an existing script
   settings.set('hotkeys.open_script_hotkey', 'CommandOrControl+O');
+
+  // Whether or not to use an external build server
+  settings.set('exec.use_external_server', false);
+
+  // The address of the external build server to use
+  settings.set('exec.external_server_address', 'http://127.0.0.1:8080/function/cq-render');
 }

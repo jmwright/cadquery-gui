@@ -7,9 +7,6 @@ var settings = remote.require('electron-settings');
 
 $(document).ready(function() {
   $('#apply_settings').on('click', function() {
-    // Welcome dialog setting
-    settings.set('startup.show_welcome', $('#show_welcome').prop('checked'));
-
     // Editor command line setting
     settings.set('general.editor_command_line', $('#editor_command_line').val());
 
@@ -22,17 +19,18 @@ $(document).ready(function() {
     // Hotkey for building and displaying scripts
     settings.set('hotkeys.build_script_hotkey', $('#build_script_hotkey').val());
 
-    // Hotkey for saving scripts
-    settings.set('hotkeys.save_script_hotkey', $('#save_script_hotkey').val());
-
     // Hotekey for creating a new script
     settings.set('hotkeys.new_script_hotkey', $('#new_script_hotkey').val());
 
     // Hotkey for opening an existing script
     settings.set('hotkeys.open_script_hotkey', $('#open_script_hotkey').val());
-  });
 
-  $('#close_settings').on('click', function() {
+    // Whether or not to use an external build server
+    settings.set('exec.use_external_server', $('#use_external_server').prop('checked'));
+
+    // The address of the external build server to use
+    settings.set('exec.external_server_address', $('#external_server_address').val());
+
     var window = remote.getCurrentWindow();
     window.close();
   });
@@ -47,9 +45,6 @@ $(document).ready(function() {
     e.preventDefault();
     require('electron').shell.openExternal("https://electronjs.org/docs/api/accelerator#available-modifiers");
   });
-
-  // Welcome dialog setting
-  $('#show_welcome').prop('checked', settings.get('startup.show_welcome'));
 
   // Editor command line setting
   $('#editor_command_line').val(settings.get('general.editor_command_line'));
@@ -71,4 +66,10 @@ $(document).ready(function() {
 
   // Hotkey for opening an existing script
   $('#open_script_hotkey').val(settings.get('hotkeys.open_script_hotkey'));
+
+  // Whether or not to use an external build server
+  $('#use_external_server').prop('checked', settings.get('exec.use_external_server'));
+
+  // The address of the external build server to use
+  $('#external_server_address').val(settings.get('exec.external_server_address'));
 });

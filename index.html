@@ -25,39 +25,13 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  data-toggle="tooltip" title="File Menu"><span class="glyphicon glyphicon-file"></span> <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#" id="new_script"><span class="glyphicon glyphicon-plus"></span> New (Ctrl+N)</a></li>
-                <li><a href="#" id="open_script"><span class="glyphicon glyphicon-open"></span> Open (Ctrl+O)</a></li>
-                <li><a href="#" id="save_script"><span class="glyphicon glyphicon-save"></span> Save (Ctrl+S)</a></li>
-                <li><a href="#" id="save_script_as"><span class="glyphicon glyphicon-save"></span> Save As</a></li>
-                <li><a href="#" id="close_script"><span class="glyphicon glyphicon-remove"></span> Close</a></li>
-                <!-- <li><a href="#" id="export_object"><span class="glyphicon glyphicon-export"></span> Export</a></li> -->
-                <!-- <li><a href="#" id="import_object"><span class="glyphicon glyphicon-import"></span> Import</a></li>
-                <li role="separator" class="divider"></li>
-                <li role="separator" class="divider"></li> -->
+            <li><a href="#" id="new_script" title="New"><span class="glyphicon glyphicon-plus"></span></a></li>
+            <li><a href="#" id="open_script" title="Open"><span class="glyphicon glyphicon-open"></span></a></li>
+            <li><a href="#" id="close_script" title="Close"><span class="glyphicon glyphicon-remove"></span></a></li>
+            <li><a href="#" id="export_object" title="Export"><span class="glyphicon glyphicon-export"></span></a></li>
+            <li><a href="#" id="build_button" data-toggle="tooltip" title="Build"><span class="glyphicon glyphicon-play"></span></a></li>
+            <li><a href="#" id="edit_button" data-toggle="tooltip" title="Edit"><span class="glyphicon glyphicon-edit"></span></a></li>
 
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" title="Learn"><span class="glyphicon glyphicon-question-sign"></span> <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a id="tour" href="#"><span class="fa fa-video-camera"></span> Tour</a></li>
-                <li><a id="getting_started" href="#"><span class="fa fa-video-camera"></span> Getting Started</a></li>
-                <li><a id="docs" href="#"><span class="glyphicon glyphicon-book"></span> Documentation</a></li>
-                <li><a id="show_examples" href="#"><span class="glyphicon glyphicon-education"></span> Examples</a></li>
-                <li><a id="videos" href="#"><span class="fa fa-video-camera"></span> Video Tutorials</a></li>
-                <li><a id="user_group" href="#"><span class="fa fa-user"></span> User Group</a></li>
-                <li><a id="about_button" href="#"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav">
-            <!-- <li><a id="validate_button" href="#" data-toggle="tooltip" title="Validate"><span class="glyphicon glyphicon-ok"></span></a></li> -->
-            <!-- <li><a id="debug_button" href="#" data-toggle="tooltip" title="Debug"><span class="fa fa-bug fa-lg" style="margin-top:3px;"></span></a></li> -->
             <li><a href="#" id="front_view" data-toggle="tooltip" title="Front View (5)"><img src="assets/images/icons/front_view.svg" alt="Front View" class="pull-left icon"/></a></li>
             <li><a href="#" id="back_view" data-toggle="tooltip" title="Back View (5)"><img src="assets/images/icons/back_view.svg" alt="Back View" class="pull-left icon"/></a></li>
             <li><a href="#" id="top_view" data-toggle="tooltip" title="Top View (8)"><img src="assets/images/icons/top_view.svg" alt="Top View" class="pull-left icon"/></a></li>
@@ -67,12 +41,23 @@
             <li><a href="#" id="iso_view" data-toggle="tooltip" title="Isometric View (+)"><img src="assets/images/icons/axiometric_view.svg" alt="Isometric View" class="pull-left icon"/></a></li>
             <li><a href="#" id="zoom_to_fit" data-toggle="tooltip" title="Zoom To Fit"><img src="assets/images/icons/zoom_all.svg" alt="Zoom To Fit" class="pull-left icon"/></a></li>
           </ul>
-          <ul class="nav navbar-nav">
-            <li><a href="#" id="edit_button" data-toggle="tooltip" title="Edit"><span class="glyphicon glyphicon-edit"></span></a></li>
-            <li><a href="#" id="build_button" data-toggle="tooltip" title="Build (F5)"><span class="glyphicon glyphicon-play"></span></a></li>
-          </ul>
+
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#" id="settings_button"><span class="glyphicon glyphicon-cog"></span></a></li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" title="Learn"><span class="glyphicon glyphicon-question-sign"></span> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a id="getting_started" href="#"><span class="fa fa-video-camera"></span> Getting Started</a></li>
+                <li><a id="docs" href="#"><span class="glyphicon glyphicon-book"></span> Documentation</a></li>
+                <li><a id="show_examples" href="#"><span class="glyphicon glyphicon-education"></span> Examples</a></li>
+                <li><a id="videos" href="#"><span class="fa fa-video-camera"></span> Video Tutorials</a></li>
+                <li><a id="user_group" href="#"><span class="fa fa-user"></span> User Group</a></li>
+                <!-- <li><a id="about_button" href="#"><span class="glyphicon glyphicon-info-sign"></span> About</a></li> -->
+              </ul>
+            </li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->

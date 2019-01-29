@@ -47,14 +47,6 @@ $(document).ready(function() {
       openScript();
     });
 
-    $('#save_script').on('click', function() {
-      saveScript();
-    });
-
-    $('#save_script_as').on('click', function() {
-      saveScriptAs();
-    });
-
     $('#close_script').on('click', function() {
       closeScript();
     });
@@ -64,16 +56,16 @@ $(document).ready(function() {
     });
 
     $('#show_examples').on('click', function() {
-      notImplementedYet();
+      shell.openExternal('https://github.com/CadQuery/cadquery/tree/master/examples')
     });
 
-    $('#validate_button').on('click', function() {
-      notImplementedYet();
-    });
+    // $('#validate_button').on('click', function() {
+    //   notImplementedYet();
+    // });
 
-    $('#debug_button').on('click', function() {
-      notImplementedYet();
-    });
+    // $('#debug_button').on('click', function() {
+    //   notImplementedYet();
+    // });
 
     $('#front_view').on('click', function() {
       VIEWER.setView('FRONT');
@@ -195,7 +187,7 @@ $(document).ready(function() {
     });
 
     $('#settings_button').on('click', function() {
-      settingsDlg = new BrowserWindow({show: false, width: 800, height: 600, center: true});
+      settingsDlg = new BrowserWindow({show: false, width: 500, height: 275, center: true});
       settingsDlg.setMenu(null);
 
       settingsDlg.once('ready-to-show', () => {
@@ -211,14 +203,6 @@ $(document).ready(function() {
       // settingsDlg.webContents.openDevTools();
     });
 
-    $('#about_button').on('click', function() {
-      notImplementedYet();
-    });
-
-    $('#sign_in_button').on('click', function() {
-      notImplementedYet();
-    });
-
     //set up model viewer
     VIEWER.init({
       initialView: 'ISO',
@@ -229,58 +213,16 @@ $(document).ready(function() {
 
     // Initialize a template that the user can start with
     curScriptText = SCRIPT_TEMPLATE;
-
-    // Temporary to help debug views
-    // gFileName = '/home/jwright/Downloads/caster_sleeve.py'
-    // BUILDER.build(gFileName);
 });
 
 function newScript() {
-  // We're starting a new script
-  gFileName = null;
+  // Initialize a template that the user can start with
+  curScriptText = SCRIPT_TEMPLATE;
 
-  // Keep the user from dumping changes they might want to keep
-  if (curScriptText !== prevScriptText && prevScriptText !== "") {
-    dialog.showMessageBox({type: "question",
-                          buttons: ["Yes", "No"],
-                          title: "Confirm",
-                          message: "Save current work first?"},
-    function(answer) {
-      // If the user answers 'Yes', they get a save-as dialog
-      if (answer === 0) {
-        saveScriptAs("Save");
-      }
-      else {
-        // Initialize a template that the user can start with
-        curScriptText = SCRIPT_TEMPLATE;
-
-        saveScriptAs("New");
-      }
-    });
-  }
-  else {
-    // Initialize a template that the user can start with
-    curScriptText = SCRIPT_TEMPLATE;
-
-    saveScriptAs("New");
-  }
+  // TODO: Open template in external editor here
 }
 
 function openScript() {
-  // Keep the user from dumping changes they might want to keep
-  if (curScriptText !== prevScriptText && prevScriptText !== "") {
-    dialog.showMessageBox({type: "question",
-                          buttons: ["Yes", "No"],
-                          title: "Confirm",
-                          message: "Save current work first?"},
-    function(answer) {
-      // If the user answers 'Yes', they get a save-as dialog
-      if (answer === 0) {
-        saveScript();
-      }
-    });
-  }
-
   // Allow the user to open a new file
   dialog.showOpenDialog({ title: 'Open', filters: [{ name: 'Python', extensions: ['py'] }]},
   function (fileNames) {
@@ -301,34 +243,6 @@ function openScript() {
 
     // Display the model in the 3D view
     BUILDER.build(gFileName);
-  });
-}
-
-function saveScript() {
-  if (gFileName === undefined || gFileName === null) {
-    saveScriptAs("Save");
-  }
-  else {
-    fs.writeFile(gFileName, curScriptText, function (err) {
-      if (err) {
-        console.log(err);
-      }
-    });
-  }
-}
-
-function saveScriptAs(title) {
-  dialog.showSaveDialog({ title: title, filters: [{ name: 'Python', extensions: ['py'] }]}, function (fileName) {
-    if (fileName === undefined) return;
-
-    // We want to keep a reference to the file for saving later
-    gFileName = fileName;
-
-    fs.writeFile(fileName, curScriptText, function (err) {
-      if (err) {
-        console.log(err);
-      }
-    });
   });
 }
 
