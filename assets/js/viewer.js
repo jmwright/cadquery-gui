@@ -28,7 +28,7 @@ var VIEWER = function() {
 
       // Keeps our 3D view properly sized
       $(window).resize(function() {
-          renderer.setSize(window.innerWidth, window.innerHeight - navBarHeight);
+          resize();
       });
 
       document.getElementById(settings.containerId).appendChild(renderer.domElement);
@@ -92,7 +92,17 @@ var VIEWER = function() {
       baseGrid.geometry.rotateX( Math.PI / 2 );
       scene.add(baseGrid);
 
+      // Make sure everything is initially the correct size
+      resize();
+
       render();
+  }
+
+  // Handles updating the camera and renderer when the window is resized so that things don't get distorted.
+  function resize() {
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth,window.innerHeight);
   }
 
   // Loads the JSON geometry data into the main scene
