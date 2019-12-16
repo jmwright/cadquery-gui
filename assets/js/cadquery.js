@@ -28,7 +28,7 @@ $(document).ready(function() {
     });
 
     $('#docs').on('click', function() {
-      shell.openExternal('http://dcowden.github.io/cadquery/');
+      shell.openExternal('https://cadquery.readthedocs.io/en/latest/');
     });
 
     $('#videos').on('click', function() {
