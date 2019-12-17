@@ -24,7 +24,7 @@ html, body {
     width: 100px;
     height: 100px;
     background-color: #808080; /* or transparent; will show through only if renderer alpha: true */
-    border: 1px solid black; /* or none; */
+    border: none; /*1px solid black;*/ /* or none; */
     margin: 20px;
     padding: 0px;
     position: absolute;
