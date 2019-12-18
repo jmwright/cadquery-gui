@@ -36,7 +36,7 @@ app.on('ready', function () {
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800, height: 600, icon: __dirname + '/assets/images/cadquery-gui_logo_dark.svg', webPreferences: {
+    width: 800, height: 600, icon: __dirname + '/assets/images/cadquery_logo_dark.png', webPreferences: {
       nodeIntegration: true
     }
   });
