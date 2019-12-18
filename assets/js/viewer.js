@@ -139,7 +139,6 @@ var VIEWER = function () {
         }
 
         render();
-        fitAll();
     }
 
     // Shows what has been loaded into the scene
