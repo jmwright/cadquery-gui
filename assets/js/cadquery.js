@@ -18,201 +18,201 @@ var prevScriptText = "";
 var curScriptText = "";
 var settingsDlg = null;
 
-$(document).ready(function() {
-    $('#build_button').on('click', function() {
-      BUILDER.build(gFileName);
-    });
+$(document).ready(function () {
+  $('#build_button').on('click', function () {
+    BUILDER.build(gFileName);
+  });
 
-    $('#edit_button').on('click', function() {
-      BUILDER.edit(gFileName, syncScript);
-    });
+  $('#edit_button').on('click', function () {
+    BUILDER.edit(gFileName, syncScript);
+  });
 
-    $('#docs').on('click', function() {
-      shell.openExternal('https://cadquery.readthedocs.io/en/latest/');
-    });
+  $('#docs').on('click', function () {
+    shell.openExternal('https://cadquery.readthedocs.io/en/latest/');
+  });
 
-    $('#videos').on('click', function() {
-      shell.openExternal('https://groups.google.com/forum/#!topic/cadquery/4wPfbwxjloQ');
-    });
+  $('#videos').on('click', function () {
+    shell.openExternal('https://groups.google.com/forum/#!topic/cadquery/4wPfbwxjloQ');
+  });
 
-    $('#user_group').on('click', function() {
-      shell.openExternal('https://groups.google.com/forum/#!forum/cadquery');
-    });
+  $('#user_group').on('click', function () {
+    shell.openExternal('https://groups.google.com/forum/#!forum/cadquery');
+  });
 
-    $('#new_script').on('click', function() {
-      newScript();
-    });
+  $('#new_script').on('click', function () {
+    newScript();
+  });
 
-    $('#open_script').on('click', function() {
-      openScript();
-    });
+  $('#open_script').on('click', function () {
+    openScript();
+  });
 
-    $('#close_script').on('click', function() {
-      closeScript();
-    });
+  $('#close_script').on('click', function () {
+    closeScript();
+  });
 
-    $('#export_object').on('click', function() {
-      notImplementedYet();
-    });
+  $('#export_object').on('click', function () {
+    notImplementedYet();
+  });
 
-    $('#show_examples').on('click', function() {
-      shell.openExternal('https://github.com/CadQuery/cadquery/tree/master/examples')
-    });
+  $('#show_examples').on('click', function () {
+    shell.openExternal('https://github.com/CadQuery/cadquery/tree/master/examples')
+  });
 
-    // $('#validate_button').on('click', function() {
-    //   notImplementedYet();
-    // });
+  // $('#validate_button').on('click', function() {
+  //   notImplementedYet();
+  // });
 
-    // $('#debug_button').on('click', function() {
-    //   notImplementedYet();
-    // });
+  // $('#debug_button').on('click', function() {
+  //   notImplementedYet();
+  // });
 
-    $('#front_view').on('click', function() {
-      VIEWER.setView('FRONT');
-    });
+  $('#front_view').on('click', function () {
+    VIEWER.setView('FRONT');
+  });
 
-    $('#back_view').on('click', function() {
-      VIEWER.setView('BACK');
-    });
+  $('#back_view').on('click', function () {
+    VIEWER.setView('BACK');
+  });
 
-    $('#top_view').on('click', function() {
-      VIEWER.setView('TOP');
-    });
+  $('#top_view').on('click', function () {
+    VIEWER.setView('TOP');
+  });
 
-    $('#bottom_view').on('click', function() {
+  $('#bottom_view').on('click', function () {
+    VIEWER.setView('BOTTOM');
+  });
+
+  $('#right_view').on('click', function () {
+    VIEWER.setView('RIGHT');
+  });
+
+  $('#left_view').on('click', function () {
+    VIEWER.setView('LEFT');
+  });
+
+  $('#iso_view').on('click', function () {
+    VIEWER.setView('ISO');
+  });
+
+  $('#zoom_to_fit').on('click', function () {
+    VIEWER.zoomAll();
+  });
+
+  var curView = 'ISO';
+  $("#mainPane").keypress(function (e) {
+    // Handle hotkeys for the 3D view
+    var code = e.keyCode || e.which;
+
+    // Numpad 0 (iso, fit all)
+    if (code == 48) {
+      VIEWER.fitAll();
+      curView = 'ISO';
+    }
+    // Numpad 1, bottom left
+    else if (code == 49) {
+      if (curView !== 'BOTTOM_LEFT') {
+        VIEWER.setView('BOTTOM_LEFT');
+        curView = 'BOTTOM_LEFT';
+      }
+      else {
+        VIEWER.setView('BOTTOM_LEFT_BACK');
+        curView = 'BOTTOM_LEFT_BACK';
+      }
+    }
+    // Numpad 2, bottom
+    else if (code == 50) {
       VIEWER.setView('BOTTOM');
-    });
-
-    $('#right_view').on('click', function() {
-      VIEWER.setView('RIGHT');
-    });
-
-    $('#left_view').on('click', function() {
+      curView = 'BOTTOM';
+    }
+    // Numpad 3, bottom right
+    else if (code == 51) {
+      if (curView !== 'BOTTOM_RIGHT') {
+        VIEWER.setView('BOTTOM_RIGHT');
+        curView = 'BOTTOM_RIGHT';
+      }
+      else {
+        VIEWER.setView('BOTTOM_RIGHT_BACK');
+        curView = 'BOTTOM_RIGHT_BACK';
+      }
+    }
+    // Numpad 4, bottom right
+    else if (code == 52) {
       VIEWER.setView('LEFT');
-    });
-
-    $('#iso_view').on('click', function() {
-      VIEWER.setView('ISO');
-    });
-
-    $('#zoom_to_fit').on('click', function() {
-      VIEWER.zoomAll();
-    });
-
-    var curView = 'ISO';
-    $("#mainPane").keypress(function(e) {
-      // Handle hotkeys for the 3D view
-      var code = e.keyCode || e.which;
-
-      // Numpad 0 (iso, fit all)
-      if(code == 48) {
-        VIEWER.fitAll();
-        curView = 'ISO';
+      curView = 'LEFT';
+    }
+    // Numpad 5, front/back swap
+    else if (code == 53) {
+      if (curView !== 'FRONT') {
+        VIEWER.setView('FRONT');
+        curView = 'FRONT';
       }
-      // Numpad 1, bottom left
-      else if (code == 49) {
-        if (curView !== 'BOTTOM_LEFT') {
-          VIEWER.setView('BOTTOM_LEFT');
-          curView = 'BOTTOM_LEFT';
-        }
-        else {
-          VIEWER.setView('BOTTOM_LEFT_BACK');
-          curView = 'BOTTOM_LEFT_BACK';
-        }
+      else {
+        VIEWER.setView('BACK');
+        curView = 'BACK';
       }
-      // Numpad 2, bottom
-      else if (code == 50) {
-        VIEWER.setView('BOTTOM');
-        curView = 'BOTTOM';
+    }
+    // Numpad 6, bottom right
+    else if (code == 54) {
+      VIEWER.setView('RIGHT');
+      curView = 'RIGHT';
+    }
+    // Numpad 7, top left
+    else if (code == 55) {
+      if (curView !== 'TOP_LEFT') {
+        VIEWER.setView('TOP_LEFT');
+        curView = 'TOP_LEFT';
       }
-      // Numpad 3, bottom right
-      else if (code == 51) {
-        if (curView !== 'BOTTOM_RIGHT') {
-          VIEWER.setView('BOTTOM_RIGHT');
-          curView = 'BOTTOM_RIGHT';
-        }
-        else {
-          VIEWER.setView('BOTTOM_RIGHT_BACK');
-          curView = 'BOTTOM_RIGHT_BACK';
-        }
+      else {
+        VIEWER.setView('TOP_LEFT_BACK');
+        curView = 'TOP_LEFT_BACK';
       }
-      // Numpad 4, bottom right
-      else if (code == 52) {
-        VIEWER.setView('LEFT');
-        curView = 'LEFT';
+    }
+    // Numpad 8, top
+    else if (code == 56) {
+      VIEWER.setView('TOP');
+      curView = 'TOP';
+    }
+    // Numpad 9, top
+    else if (code == 57) {
+      if (curView !== 'TOP_RIGHT') {
+        VIEWER.setView('TOP_RIGHT');
+        curView = 'TOP_RIGHT';
       }
-      // Numpad 5, front/back swap
-      else if (code == 53) {
-        if (curView !== 'FRONT') {
-          VIEWER.setView('FRONT');
-          curView = 'FRONT';
-        }
-        else {
-          VIEWER.setView('BACK');
-          curView = 'BACK';
-        }
+      else {
+        VIEWER.setView('TOP_RIGHT_BACK');
+        curView = 'TOP_RIGHT_BACK';
       }
-      // Numpad 6, bottom right
-      else if (code == 54) {
-        VIEWER.setView('RIGHT');
-        curView = 'RIGHT';
-      }
-      // Numpad 7, top left
-      else if (code == 55) {
-        if (curView !== 'TOP_LEFT') {
-          VIEWER.setView('TOP_LEFT');
-          curView = 'TOP_LEFT';
-        }
-        else {
-          VIEWER.setView('TOP_LEFT_BACK');
-          curView = 'TOP_LEFT_BACK';
-        }
-      }
-      // Numpad 8, top
-      else if (code == 56) {
-        VIEWER.setView('TOP');
-        curView = 'TOP';
-      }
-      // Numpad 9, top
-      else if (code == 57) {
-        if (curView !== 'TOP_RIGHT') {
-          VIEWER.setView('TOP_RIGHT');
-          curView = 'TOP_RIGHT';
-        }
-        else {
-          VIEWER.setView('TOP_RIGHT_BACK');
-          curView = 'TOP_RIGHT_BACK';
-        }
-      }
-    });
+    }
+  });
 
-    $('#settings_button').on('click', function() {
-      settingsDlg = new BrowserWindow({show: false, width: 500, height: 275, center: true});
-      settingsDlg.setMenu(null);
+  $('#settings_button').on('click', function () {
+    settingsDlg = new BrowserWindow({ show: false, width: 500, height: 275, center: true });
+    settingsDlg.setMenu(null);
 
-      settingsDlg.once('ready-to-show', () => {
-        settingsDlg.show();
-      })
+    settingsDlg.once('ready-to-show', () => {
+      settingsDlg.show();
+    })
 
-      settingsDlg.on('closed', () => {
-        settingsDlg = null
-      })
+    settingsDlg.on('closed', () => {
+      settingsDlg = null
+    })
 
-      settingsDlg.loadURL(`file://${__dirname}/dialogs/settings_dialog.html`)
+    settingsDlg.loadURL(`file://${__dirname}/dialogs/settings_dialog.html`)
 
-      // settingsDlg.webContents.openDevTools();
-    });
+    // settingsDlg.webContents.openDevTools();
+  });
 
-    //set up model viewer
-    VIEWER.init({
-      initialView: 'ISO',
-      width: 800,
-      height: 600,
-      containerId: "modelview"
-    });
+  //set up model viewer
+  VIEWER.init({
+    initialView: 'ISO',
+    width: 800,
+    height: 600,
+    containerId: "modelview"
+  });
 
-    // Initialize a template that the user can start with
-    curScriptText = SCRIPT_TEMPLATE;
+  // Initialize a template that the user can start with
+  curScriptText = SCRIPT_TEMPLATE;
 });
 
 function newScript() {
@@ -224,30 +224,30 @@ function newScript() {
 
 function openScript() {
   // Allow the user to open a new file
-  dialog.showOpenDialog({ title: 'Open', filters: [{ name: 'Python', extensions: ['py'] }]},
-  function (fileNames) {
-    if (fileNames === undefined) return;
-    var fileName = fileNames[0];
+  dialog.showOpenDialog({ title: 'Open', filters: [{ name: 'Python', extensions: ['py'] }] },
+    function (fileNames) {
+      if (fileNames === undefined) return;
+      var fileName = fileNames[0];
 
-    // Keep a reference to this for later
-    gFileName = fileName;
+      // Keep a reference to this for later
+      gFileName = fileName;
 
-    // Set environment variables with the script path and directory so that the CadQuery script can use it
-    process.env['MYSCRIPT_FULL_PATH'] = fileName;
-    process.env['MYSCRIPT_DIR'] = fileName.substring(0, fileName.lastIndexOf("/"));;
+      // Set environment variables with the script path and directory so that the CadQuery script can use it
+      process.env['MYSCRIPT_FULL_PATH'] = fileName;
+      process.env['MYSCRIPT_DIR'] = fileName.substring(0, fileName.lastIndexOf("/"));;
 
-    fs.readFile(fileName, function read(err, data) {
-      if (err) {
+      fs.readFile(fileName, function read(err, data) {
+        if (err) {
           console.log(err);
-      }
+        }
 
-      curScriptText = data.toString();
-      prevScriptText = curScriptText;
+        curScriptText = data.toString();
+        prevScriptText = curScriptText;
+      });
+
+      // Display the model in the 3D view
+      BUILDER.build(gFileName);
     });
-
-    // Display the model in the 3D view
-    BUILDER.build(gFileName);
-  });
 }
 
 function closeScript() {

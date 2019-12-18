@@ -3,12 +3,12 @@
 /*globals require: false, editor: false, process: false, MVIEWER: false*/
 
 var temp = require('temp');
-var fs   = require('fs');
+var fs = require('fs');
 var exec = require('child_process').exec;
 var settings = require('electron').remote.require('electron-settings');
 var request = require('request');
 
-var BUILDER = function() {
+var BUILDER = function () {
   function build(path) {
     if (path === undefined || path === null) return;
 
@@ -28,11 +28,11 @@ var BUILDER = function() {
       script_json["script"] = script;
 
       request.post({
-            headers: {'content-type' : 'text/json', 'X-Output-Mode': 'json'},
-            url:     external_server_address,
-            body:    JSON.stringify(script_json)
-          },
-        function(error, response, body) {
+        headers: { 'content-type': 'text/json', 'X-Output-Mode': 'json' },
+        url: external_server_address,
+        body: JSON.stringify(script_json)
+      },
+        function (error, response, body) {
           if (!error && response.statusCode == 200) {
             // Some versions of CadQuery output this extra line at the top that will break JSON parsing
             var trimmed = body.replace("Unable to handle function call", "").trim();
@@ -44,29 +44,29 @@ var BUILDER = function() {
           else {
             console.log("There was a problem contacting the server: " + response.statusCode);
           }
-      });
+        });
     }
     else {
       // Execute the script using the python interpreter
-      exec("python " + process.cwd() + "/assets/python/cq_process.py --file=" + path + " --outputFormat=threeJS", function(error, stdout, stderr) {
+      exec("python " + process.cwd() + "/assets/python/cq_process.py --file=" + path + " --outputFormat=threeJS", function (error, stdout, stderr) {
         if (error === undefined || error === null) {
-            // The CQGI Python script should have given us back a JSON result via stdout
-            results = JSON.parse(stdout);
+          // The CQGI Python script should have given us back a JSON result via stdout
+          results = JSON.parse(stdout);
 
-            // Handle any error message that we got back from the CadQuery script execution
-            if (results.error !== "None") {
-              $('#scriptAlertTitle').html("CadQuery Script Error: ");
-              $('#scriptAlertMsg').html(results.error);
-              $('.alert').show();
-            }
+          // Handle any error message that we got back from the CadQuery script execution
+          if (results.error !== "None") {
+            $('#scriptAlertTitle').html("CadQuery Script Error: ");
+            $('#scriptAlertMsg').html(results.error);
+            $('.alert').show();
+          }
 
-            // Make sure there's something to display and then display all the objects
-            if (results.geometry.length > 0) VIEWER.loadGeometry(results.geometry);
+          // Make sure there's something to display and then display all the objects
+          if (results.geometry.length > 0) VIEWER.loadGeometry(results.geometry);
         }
         else {
-            $('#scriptAlertTitle').html("CadQuery Script Error: ");
-            $('#scriptAlertMsg').html(error + " : " + stderr);
-            $('.alert').show();
+          $('#scriptAlertTitle').html("CadQuery Script Error: ");
+          $('#scriptAlertMsg').html(error + " : " + stderr);
+          $('.alert').show();
         }
       });
     }
@@ -84,7 +84,7 @@ var BUILDER = function() {
         // Update the callback for anything that wants updates to the text
         fs.readFile(path, function read(err, data) {
           if (err) {
-              console.log(err);
+            console.log(err);
           }
 
           cb(data);
@@ -97,13 +97,13 @@ var BUILDER = function() {
   function edit(path, cb) {
     if (path === undefined || path === null) return;
 
-    exec(settings.get('general.editor_command_line') + ' ' + path, function(error, stdout, stderr) {
+    exec(settings.get('general.editor_command_line') + ' ' + path, function (error, stdout, stderr) {
       if (error === undefined || error === null) {
         // Make sure that updates to the file are handled
         watch(path, cb);
       }
       else {
-          console.log(`exec error: ${error}; stderr: ${stderr}`);
+        console.log(`exec error: ${error}; stderr: ${stderr}`);
       }
     });
   }
