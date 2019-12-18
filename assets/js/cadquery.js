@@ -106,8 +106,11 @@ $(document).ready(function () {
 
     // Numpad 0 (iso, fit all)
     if (code == 48) {
-      VIEWER.fitAll();
-      curView = 'ISO';
+      // VIEWER.fitAll();
+      if (curView !== 'ISO') {
+        VIEWER.setView('ISO');
+        curView = 'ISO';
+      }
     }
     // Numpad 1, bottom left
     else if (code == 49) {
@@ -224,10 +227,10 @@ function newScript() {
 
 function openScript() {
   // Allow the user to open a new file
-  dialog.showOpenDialog({ title: 'Open', filters: [{ name: 'Python', extensions: ['py'] }] },
-    function (fileNames) {
-      if (fileNames === undefined) return;
-      var fileName = fileNames[0];
+  dialog.showOpenDialog({ title: 'Open', filters: [{ name: 'Python', extensions: ['py'] }] }).then(
+    function (result) {
+      if (result.filePaths === undefined) return;
+      var fileName = result.filePaths[0];
 
       // Keep a reference to this for later
       gFileName = fileName;
@@ -247,7 +250,6 @@ function openScript() {
 
       // Display the model in the 3D view
       BUILDER.build(gFileName);
-
       // VIEWER.fitAll();
     });
 }

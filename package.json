@@ -23,7 +23,7 @@
     "temp": "^0.8.3"
   },
   "devDependencies": {
-    "electron": "^3.0.8",
+    "electron": "^7.1.6",
     "electron-debug": "^2.0.0",
     "electron-packager": "^13.0.1",
     "electron-prebuilt": "^1.4.13"

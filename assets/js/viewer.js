@@ -198,6 +198,11 @@ var VIEWER = function () {
         camera.position.z = z;
     }
 
+    // Enables keeping the camera distance the same
+    function getCameraPosition() {
+        return { 'x': camera.position.x, 'y': camera.position.y, 'z': camera.position.z }
+    }
+
     // Allows us to reset the rotation angle of the objects in the scene
     function rotateObjects(angle) {
         for (var i = 0; i < scene.children.length; i++) {
