@@ -248,7 +248,7 @@ function openScript() {
       // Display the model in the 3D view
       BUILDER.build(gFileName);
 
-      VIEWER.fitAll();
+      // VIEWER.fitAll();
     });
 }
 
