@@ -111,10 +111,10 @@ var VIEWER = function () {
         clear();
 
         // Step through all the results and render them
-        for (var j = 0; j < data.allResults.length; j++) {
+        for (var j = 0; j < data.length; j++) {
             //load new model
             var loader = new THREE.JSONLoader();
-            var model = loader.parse(data.allResults[j]);
+            var model = loader.parse(data[j]);
 
             var mesh = new THREE.Mesh(model.geometry, material);
             var edges = new THREE.EdgesHelper(mesh, 0x000000);

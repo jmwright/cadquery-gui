@@ -112,7 +112,7 @@ def main(argv):
         jsonMeshes.append(mesher.toJson())
 
     # Stuff all of the JSON meshes into an array so that the environment can display all of them
-    allJSONResults = '{"allResults": ['
+    allJSONResults = '{"geometry": ['
     i = 0
     for curMesh in jsonMeshes:
       allJSONResults += curMesh
@@ -122,7 +122,9 @@ def main(argv):
         allJSONResults += ","
 
       i += 1
-    allJSONResults += "]}"
+    allJSONResults += "],"
+
+    allJSONResults += '"error": "' + str(build_result.exception) + '"}'
 
     # Passing the JSON to stdout will allow the GUI to render the object
     print(allJSONResults)
@@ -130,20 +132,20 @@ def main(argv):
 class JsonMesh(object):
     def __init__(self):
 
-        self.vertices = [];
-        self.faces = [];
-        self.nVertices = 0;
-        self.nFaces = 0;
+        self.vertices = []
+        self.faces = []
+        self.nVertices = 0
+        self.nFaces = 0
 
     def addVertex(self,x,y,z):
-        self.nVertices += 1;
-        self.vertices.extend([x,y,z]);
+        self.nVertices += 1
+        self.vertices.extend([x,y,z])
 
     #add triangle composed of the three provided vertex indices
     def addTriangleFace(self, i,j,k):
         #first position means justa simple triangle
-        self.nFaces += 1;
-        self.faces.extend([0,int(i),int(j),int(k)]);
+        self.nFaces += 1
+        self.faces.extend([0,int(i),int(j),int(k)])
 
     """
         Get a json model from this model.
@@ -155,7 +157,7 @@ class JsonMesh(object):
             'faces' : str(self.faces),
             'nVertices': self.nVertices,
             'nFaces' : self.nFaces
-        };
+        }
 
 if __name__ == "__main__":
   main(sys.argv[1:])

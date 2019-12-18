@@ -12,6 +12,9 @@ var BUILDER = function() {
   function build(path) {
     if (path === undefined || path === null) return;
 
+    // Make sure any previous alerts are hidden
+    $('.alert').hide();
+
     var results = "{}";
 
     // Determine if we are using an external server, and where to look for it
@@ -47,25 +50,23 @@ var BUILDER = function() {
       // Execute the script using the python interpreter
       exec("python " + process.cwd() + "/assets/python/cq_process.py --file=" + path + " --outputFormat=threeJS", function(error, stdout, stderr) {
         if (error === undefined || error === null) {
-            var lines = stdout.trim().split('\n');
+            // The CQGI Python script should have given us back a JSON result via stdout
+            results = JSON.parse(stdout);
 
-            // Remove any extra output from before the JSON
-            for(var i = 0; i < lines.length; i++) {
-              if (lines[i][0] !== '{') {
-                delete lines[i]
-              }
-              else {
-                break;
-              }
+            // Handle any error message that we got back from the CadQuery script execution
+            if (results.error !== "None") {
+              $('#scriptAlertTitle').html("CadQuery Script Error: ");
+              $('#scriptAlertMsg').html(results.error);
+              $('.alert').show();
             }
 
-            results = JSON.parse(lines.join('\n'));
-
-            // VIEWER will display all of the objects that are in the returned JSON
-            VIEWER.loadGeometry(results);
+            // Make sure there's something to display and then display all the objects
+            if (results.geometry.length > 0) VIEWER.loadGeometry(results.geometry);
         }
         else {
-            console.log(`exec error: ${error}; stderr: ${stderr}`);
+            $('#scriptAlertTitle').html("CadQuery Script Error: ");
+            $('#scriptAlertMsg').html(error + " : " + stderr);
+            $('.alert').show();
         }
       });
     }

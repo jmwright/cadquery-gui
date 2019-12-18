@@ -232,6 +232,10 @@ function openScript() {
     // Keep a reference to this for later
     gFileName = fileName;
 
+    // Set environment variables with the script path and directory so that the CadQuery script can use it
+    process.env['MYSCRIPT_FULL_PATH'] = fileName;
+    process.env['MYSCRIPT_DIR'] = fileName.substring(0, fileName.lastIndexOf("/"));;
+
     fs.readFile(fileName, function read(err, data) {
       if (err) {
           console.log(err);
