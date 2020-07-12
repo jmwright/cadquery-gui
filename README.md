@@ -17,6 +17,8 @@ pip install git+https://github.com/dcowden/cadquery.git
 ```
 
 ## CadQuery 2.0 Prerequisites
+***NOTE:*** caduqery-gui is not yet compatible with the OCP (latest) version of CadQuery 2.0. Tessellation works differently in the new CadQuery version which has broken `show_object` processing and display.
+
 If you are wanting to use the PythonOCC based version of CadQuery (version 2.x), follow these prerequisite installation instructions.
 1. Create a cadquery Anaconda environment `conda create --name cadquery`
 2. Activate the conda environment `conda activate cadquery`
