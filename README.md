@@ -1,7 +1,7 @@
 # cadquery-gui (cqg)
 An Electron-based CAD GUI built for [CadQuery](https://github.com/dcowden/cadquery/blob/master/README.md).
 
-***Note: This software is in alpha and is seeing breaking changes frequently. It is not ready for production use.***
+***Note: Unless you have a compelling reason to use cadquery-gui, it is recommended that you transition to [CQ-editor](https://github.com/CadQuery/CQ-editor) as it has better support and is fully CadQuery 2.x compatible.***
 
 ![User Interface Overview](docs/images/gui.png)
 
