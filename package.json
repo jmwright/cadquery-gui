@@ -25,7 +25,7 @@
     "yargs-parser": "^13.1.2"
   },
   "devDependencies": {
-    "electron": "^22.3.25",
+    "electron": "^28.3.2",
     "electron-debug": "^2.0.0",
     "electron-packager": "^13.1.1",
     "electron-prebuilt": "^1.4.13"
